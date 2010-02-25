@@ -65,7 +65,7 @@ sub new {
 sub sources {
     my ($self, $source_notation_candidates_ref) = @_;
 
-    if (scalar @_ > 1) {
+    if (scalar @_ > 1) {    # $self->sources(undef) comes here and dies
         if ($source_notation_candidates_ref eq ':all') {
             $self->{sources} = [
                 grep {
@@ -91,7 +91,7 @@ sub sources {
 sub target {
     my ($self, $target_notation_candidate) = @_;
 
-    if (scalar @_ > 1)  {
+    if (scalar @_ > 1) {    # $self->target(undef) comes here and dies
         try {
             $self->_check_notations($target_notation_candidate);
         }
@@ -142,7 +142,7 @@ sub remove_sources {
         confess "Could not remove source notations because: " . $_;
     };
 
-    # Note: I dare do not user List::Compare to get complement notations
+    # Note: I dare do not use List::Compare to get complement notations
     my %source_notation;
     @source_notation{ $self->all_sources } = ();
     map {
