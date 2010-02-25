@@ -1,0 +1,73 @@
+#!perl
+
+use 5.008_001;
+use strict;
+use warnings;
+use utf8;
+
+use Encode;
+use Lingua::EO::Orthography;
+
+my $utf8      = find_encoding('utf8');
+my $converter = Lingua::EO::Orthography->new;
+my $various   = q{C^i-momente, la songha h'orajxo ^sprucigas aplauwdon.};
+#                 --                 --  --   --  --             --
+#                  ^                  ^   ^    ^  ^               ^
+#                  |                  |   |    |  |               |
+# post-caret (circumflex)             |   |    |  |               |
+# H-system of Zamenhof ---------------+   |    |  |               |
+# apostrophe -----------------------------+    |  |               |
+# X-system ------------------------------------+  |               |
+# pre-caret (circumflex) -------------------------+               |
+# extended h-system ----------------------------------------------+
+
+my $orthographic = $converter->convert($various);
+
+$converter->sources([qw(orthography)]);
+$converter->target('postfix_x');
+my $x_systematic = $converter->convert($orthographic);
+
+print $utf8->encode("Various:      $various\n");
+print $utf8->encode("Orthographic: $orthographic\n");
+print $utf8->encode("X-systematic: $x_systematic\n");
+
+__END__
+
+=pod
+
+=head1 NAME
+
+converter.pl - An example of converting with Lingua::EO::Orthography
+
+=head1 DESCRIPTION
+
+This is an example of converting with
+L<Lingua::EO::Orthography|Lingua::EO::Orthography>.
+
+Please run this script on an UTF-8 available console,
+or redirect STDOUT into a file and open it with an UTF-8 available editor.
+
+=head1 AUTHOR
+
+=over 4
+
+=item MORIYA Masaki (a.k.a. Gardejo)
+
+C<< <moriya at cpan dot org> >>,
+L<http://ttt.ermitejo.com/>
+
+=back
+
+=head1 COPYRIGHT AND LICENSE
+
+Copyright (c) 2010 by MORIYA Masaki (a.k.a. Gardejo),
+L<http://ttt.ermitejo.com/>.
+
+This library is free software;
+you can redistribute it and/or modify it under the same terms as Perl itself.
+See L<perlgpl|perlgpl> and L<perlartistic|perlartistic>.
+
+The full text of the license can be found in the F<LICENSE> file
+included with this distribution.
+
+=cut
