@@ -66,22 +66,22 @@ than C<Lingua::EO::Supersignoj>.
 =head1 EXAMPLE
 
 In my environment (Strawberry Perl 5.10.0.1 on Windows XP Professional with SP3,
-Intel Core2 6300 @1.86GHz, 1GB RAM):
+AMD Optern 252 @ 2.6GHz * 2, 2GB RAM):
 
  ----------------------------------------------------------------
  Benchmark: timing 50000 iterations of Orthography->new, Supersignoj->nova...
- Orthography->new:  3 wallclock secs ( 3.11 usr +  0.00 sys =  3.11 CPU) @ 16077.17/s (n=50000)
- Supersignoj->nova:  4 wallclock secs ( 4.70 usr +  0.00 sys =  4.70 CPU) @ 10633.77/s (n=50000)
+ Orthography->new:  3 wallclock secs ( 2.89 usr +  0.00 sys =  2.89 CPU) @ 17301.04/s (n=50000)
+ Supersignoj->nova:  4 wallclock secs ( 3.77 usr +  0.00 sys =  3.77 CPU) @ 13276.69/s (n=50000)
                       Rate Supersignoj->nova  Orthography->new
- Supersignoj->nova 10634/s                --              -34%
- Orthography->new  16077/s               51%                --
+ Supersignoj->nova 13277/s                --              -23%
+ Orthography->new  17301/s               30%                --
  ----------------------------------------------------------------
  Benchmark: timing 50000 iterations of Orthography->convert, Supersignoj->transkodigu...
- Orthography->convert:  2 wallclock secs ( 1.94 usr +  0.00 sys =  1.94 CPU) @ 25813.11/s (n=50000)
- Supersignoj->transkodigu: 10 wallclock secs ( 9.72 usr +  0.00 sys =  9.72 CPU) @ 5144.56/s (n=50000)
+ Orthography->convert:  2 wallclock secs ( 1.64 usr +  0.00 sys =  1.64 CPU) @ 30469.23/s (n=50000)
+ Supersignoj->transkodigu:  9 wallclock secs ( 8.97 usr +  0.00 sys =  8.97 CPU) @ 5574.76/s (n=50000)
                              Rate Supersignoj->transkodigu   Orthography->convert
- Supersignoj->transkodigu  5145/s                       --                   -80%
- Orthography->convert     25813/s                     402%                     --
+ Supersignoj->transkodigu  5575/s                       --                   -82%
+ Orthography->convert     30469/s                     447%                     --
 
 =head1 AUTHOR
 
