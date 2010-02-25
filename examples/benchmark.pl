@@ -66,7 +66,7 @@ than C<Lingua::EO::Supersignoj>.
 =head1 EXAMPLE
 
 In my environment (Strawberry Perl 5.10.0.1 on Windows XP Professional with SP3,
-AMD Optern 252 @ 2.6GHz * 2, 2GB RAM):
+AMD Opteron 252 @ 2.6GHz * 2, 2GB RAM):
 
  ----------------------------------------------------------------
  Benchmark: timing 50000 iterations of Orthography->new, Supersignoj->nova...
