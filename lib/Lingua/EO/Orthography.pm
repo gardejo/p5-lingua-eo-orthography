@@ -84,7 +84,6 @@ sub sources {
         }
     }
 
-    return unless defined wantarray;
     return $self->{sources};
 }
 
@@ -101,7 +100,6 @@ sub target {
         $self->{target} = $target_notation_candidate;
     }
 
-    return unless defined wantarray;
     return $self->{target};
 }
 
@@ -113,7 +111,6 @@ sub target {
 sub all_sources {
     my $self = shift;
 
-    return unless defined wantarray;
     return @{ $self->{sources} };
 }
 
@@ -128,7 +125,6 @@ sub add_sources {
     };
     @{ $self->{sources} } = uniq $self->all_sources, @adding_notations;
 
-    return unless defined wantarray;
     return $self->{sources};
 }
 
@@ -151,7 +147,6 @@ sub remove_sources {
     } @removing_notations;
     @{ $self->{sources} } = keys %source_notation;
 
-    return unless defined wantarray;
     return $self->{sources};
 }
 
@@ -173,9 +168,7 @@ sub convert {
 
     $string =~ s{
         ($source_pattern)
-    }{
-        $target_character->{$1};
-    }xmseg;
+    }{$target_character->{$1}}xmsg;
 
     return $string;
 }
