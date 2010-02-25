@@ -83,6 +83,17 @@ AMD Opteron 252 @ 2.6GHz * 2, 2GB RAM):
  Supersignoj->transkodigu  5575/s                       --                   -82%
  Orthography->convert     30469/s                     447%                     --
 
+=head1 TO DO
+
+=over 4
+
+=item *
+
+To use various C<$input> and to test to convert it
+with various alignment (from/to).
+
+=back
+
 =head1 AUTHOR
 
 =over 4
