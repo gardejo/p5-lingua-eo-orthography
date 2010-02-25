@@ -8,18 +8,17 @@ use utf8;
 use Encode;
 use Lingua::EO::Orthography;
 
-my $utf8      = find_encoding('utf8');
 my $converter = Lingua::EO::Orthography->new;
 my $various   = q{C^i-momente, la songha h'orajxo ^sprucigas aplauwdon.};
 #                 --                 --  --   --  --             --
 #                  ^                  ^   ^    ^  ^               ^
 #                  |                  |   |    |  |               |
 # post-caret (circumflex)             |   |    |  |               |
-# H-system of Zamenhof ---------------+   |    |  |               |
-# apostrophe -----------------------------+    |  |               |
+# Zamenhof system --------------------+   |    |  |               |
+# post-apostrophe ------------------------+    |  |               |
 # X-system ------------------------------------+  |               |
 # pre-caret (circumflex) -------------------------+               |
-# extended h-system ----------------------------------------------+
+# extended H-system ----------------------------------------------+
 
 my $orthographic = $converter->convert($various);
 
@@ -27,6 +26,7 @@ $converter->sources([qw(orthography)]);
 $converter->target('postfix_x');
 my $x_systematic = $converter->convert($orthographic);
 
+my $utf8 = find_encoding('utf8');
 print $utf8->encode("Various:      $various\n");
 print $utf8->encode("Orthographic: $orthographic\n");
 print $utf8->encode("X-systematic: $x_systematic\n");
