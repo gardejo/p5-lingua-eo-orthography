@@ -182,6 +182,7 @@ C' c' G' g' H' h' J' j' S' s' U' u'
  記法をカスタマイズできる   'u'のみ可能     いいえ(検討中)              *3
  'flughaveno'を取り扱える   いいえ          いいえ(検討中)              *4
  APIの言語                  eo:エスペラント en:英語
+ 多対1の変換ができる        いいえ          はい                        *5
  複数の記法を取り扱える     いいえ          はい                        *5
  速度                       満足な速さ      約4倍速い                   *6
  直接の依存                 3 (コアは2)     9 (コアは4)                 *7
@@ -283,7 +284,7 @@ blah blah blah
 
 =head3 C<< convert >>
 
-    $converted_string = $self->convert($original_string);
+    $converted_string = $object->convert($original_string);
 
 blah blah blah
 

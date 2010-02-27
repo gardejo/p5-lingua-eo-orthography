@@ -419,7 +419,7 @@ Your feedback is welcome.>
  Can customize notation     Only 'u'        No (under consideration)    *3
  Can treat 'flughaveno'     No              No (under consideration)    *4
  API language               eo: Esperanto   en: English
- Can treat plural notations No              Yes                         *5
+ Can convert N:1            No              Yes                         *5
  Speed                      Satisfied       About 400% faster           *6
  Immediate dependencies     3 (2 in core)   9 (4 in core)               *7
  Whole dependencies         3 (2 in core)   22 (12 in core)             *7
@@ -528,7 +528,7 @@ blah blah blah
 
 =head3 C<< convert >>
 
-    $converted_string = $self->convert($original_string);
+    $converted_string = $object->convert($original_string);
 
 blah blah blah
 
