@@ -45,7 +45,6 @@ use inc::Module::Install;
         # was included by perl 5.007_003
     requires        'Regexp::Assemble'                  => '0';
     requires        'Try::Tiny'                         => '0';
-    requires        'namespace::autoclean'              => '0';
 
 # ================================================================
 # test dependency(-ies)
