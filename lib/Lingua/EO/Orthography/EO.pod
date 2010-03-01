@@ -68,6 +68,10 @@ blah blah blah
 B<This module is in stage of beta release, and API may be changed.
 Your feedback is welcome.>
 
+=head2 Catalogue of Notations
+
+blah blah blah
+
 =head2 Komparo kun Lingua::EO::Supersignoj
 
  Viewpoints                 ::Supersignoj   ::Orthography               Note
@@ -78,11 +82,11 @@ Your feedback is welcome.>
  Can customize notation     Only 'u'        No (under consideration)    *3
  Can treat 'flughaveno'     No              No (under consideration)    *4
  API language               eo: Esperanto   en: English
- Can convert N:1            No              Yes                         *5
+ Can do N:1 conversion      No              Yes                         *5
  Speed                      Satisfied       About 400% faster           *6
- Immediate dependencies     3 (2 in core)   9 (4 in core)               *7
- Whole dependencies         3 (2 in core)   22 (12 in core)             *7
- Test case numbers          3               ****
+ Immediate dependencies     3? (2? in core) 9? (4? in core)             *7
+ Whole dependencies         3? (2? in core) 22? (12? in core)           *7
+ Test case numbers          3               75
  License                    Unknown         Perl (Artistic or GNU GPL)
  Last modified on           Mar. 2003       Mar. 2010
 
@@ -162,6 +166,8 @@ See F</examples/benchmark.pl> in this distribution.
 =item 7.
 
 The source of dependencies is L<http://deps.cpantesters.org/>.
+
+Such number excludes modules for building and testing.
 
 Any dependencies of L<Lingua::EO::Orthography|Lingua::EO::Orthography> have
 a certain favorable opinion. I quite agree with those recommendation.
@@ -351,8 +357,8 @@ below is the C<Devel::Cover> summary report on this distribution's test suite.
  ---------------------------- ------ ------ ------ ------ ------ ------ ------
  File                           stmt   bran   cond    sub    pod   time  total
  ---------------------------- ------ ------ ------ ------ ------ ------ ------
- .../Lingua/EO/Orthography.pm   68.5   50.0    n/a   66.7  100.0  100.0   66.7
- Total                          68.5   50.0    n/a   66.7  100.0  100.0   66.7
+ .../Lingua/EO/Orthography.pm  100.0  100.0  100.0  100.0  100.0  100.0  100.0
+ Total                         100.0  100.0  100.0  100.0  100.0  100.0  100.0
  ---------------------------- ------ ------ ------ ------ ------ ------ ------
 
 =head1 AUTHOR

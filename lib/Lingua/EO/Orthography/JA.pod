@@ -62,17 +62,17 @@ L<Lingua::EO::Orthography::JA|Lingua::EO::Orthography::JA> (この文書)
 =head1 解説
 
 エスペラントのアルファベットのうち6文字はASCIIに存在しません。
-歴史的に、つまり活版印刷やタイプライターの時代から、それらの文字はしばしばL<代用表記|/記法>されて来ました。
-現在ではユニコード(Unicode)の普及によって正字法で表記することも珍しくありません。しかしキーボードからの入力が難しい環境もまだ多いでしょうし、代用表記で記述された昔の文書を取り扱うこともあるでしょう。
+歴史的に、つまり活版印刷やタイプライターの時代から、それらの文字はしばしばL<代用表記|/記法>(eo: surogata skribosistemo)されて来ました。
+現在ではユニコード(en: Unicode, eo: Unikodo)の普及によって正字法(正書法, en: orthography, eo: ortografio)で表記することも珍しくありません。しかしキーボードからの入力が難しい環境もまだ多いでしょうし、代用表記で記述された昔の文書を取り扱うこともあるでしょう。
 
 このオブジェクト指向モジュールは、それらの記法を変換する機能を提供します。
 
 =head2 警告
 
-B<このモジュールはベータ版リリースの段階であり、APIは将来的に変更され得ます。
+B<このモジュールはベータ版リリースの段階にあり、APIは将来的に変更され得ます。
 あなたのフィードバックを歓迎します。>
 
-=head2 記法
+=head2 記法の一覧
 
 以下の記法名はL<new()|/new>やL<add_sources()|/add_sources>などの引数に使えます。
 
@@ -147,7 +147,9 @@ CX cx GX gx HX hx JX jx SX sx UX ux
 
 アルファベットにキャレットC<^>を後置する代用表記法です。
 
-I<キャレット方式>(I<caret system>, I<**** sistemo>)と呼ばれています。
+# Fix me: あとで正字法に変える
+
+I<キャレット方式>(I<caret system>, I<c^apelita sistemo sistemo>)と呼ばれています。
 
 キャレット(caret)がサーカムフレックス(circumflex)と同じ形であることから、代用表記の一つとして使われることがあります。
 
@@ -183,11 +185,10 @@ C' c' G' g' H' h' J' j' S' s' U' u'
  'flughaveno'を取り扱える   いいえ          いいえ(検討中)              *4
  APIの言語                  eo:エスペラント en:英語
  多対1の変換ができる        いいえ          はい                        *5
- 複数の記法を取り扱える     いいえ          はい                        *5
  速度                       満足な速さ      約4倍速い                   *6
- 直接の依存                 3 (コアは2)     9 (コアは4)                 *7
- 全体の依存                 3 (コアは2)     22 (コアは12)               *7
- テストケース数             3               ****
+ 直接の依存                 3? (コアは2?)   9? (コアは4?)               *7
+ 全体の依存                 3? (コアは2?)   22? (コアは12?)             *7
+ テストケース数             3               75
  使用許諾条件(ライセンス)   不明            Perl(ArtisticかGNU GPL)
  最終更新                   2003年3月       2010年3月
 
@@ -262,6 +263,8 @@ L<Lingua::EO::Orthography|Lingua::EO::Orthography>はL<Lingua::EO::Supersignoj|L
 
 依存モジュールの情報源はL<http://deps.cpantesters.org/>です。
 
+上記の数はビルド用およびテスト用のモジュールを除いたものです。
+
 L<Lingua::EO::Orthography|Lingua::EO::Orthography>のどの依存モジュールも一定の評価を得ています。
 開発者もそれらの推薦にとても同意しています。
 
@@ -278,7 +281,31 @@ L<Lingua::EO::Orthography|Lingua::EO::Orthography>のどの依存モジュール
 
     $object = Lingua::EO::Orthography->new(%init_arg);
 
-blah blah blah
+L<Lingua::EO::Orthography|Lingua::EO::Orthography>オブジェクトを返します。
+
+引数としてハッシュC<%init_arg>を受け容れます。ハッシュのキーにはC<sources>とC<target>のいずれか、ないしは両方を指定できます。
+
+=over 4
+
+=item C<< sources => \@source_notations >>
+
+変換元のL<記法|/記法>を配列リファレンスまたはC<:all>で指定します。
+
+C<:all>はL<zamenhof|/zamenhof>, L<capital_zamenhof|/capital_zamenhof>, L<postfix_h|/postfix_h>, L<postfix_capital_h|/postfix_capital_h>, L<postfix_x|/postfix_x>, L<postfix_capital_x|/postfix_capital_x>, L<postfix_caret|/postfix_caret>, L<postfix_apostrophe|/postfix_apostrophe>, L<prefix_caret|/prefix_caret>全ての指定と等価です。
+
+省略時にはC<:all>を指定したものとみなします。
+
+C<:all>または配列リファレンス以外の値を指定した場合や、配列要素に未知の記法やC<undef>が含まれる場合には、例外を送出します。
+
+=item C<< target => $target_notation >>
+
+変換先のL<記法|/記法>をスカラーで指定します。
+
+省略時にはL<orthography|/orthography>を指定したものとみなします。
+
+未知の記法や、C<undef>を指定した場合には、例外を送出します。
+
+=back
 
 =head2 コンバーター
 
@@ -286,7 +313,10 @@ blah blah blah
 
     $converted_string = $object->convert($original_string);
 
-blah blah blah
+引数として与えた文字列を変換し、変換後の文字列を返します。
+引数は汚しません（つまり、副作用として引数の文字列を変更することはありません）。
+
+コンストラクターL<new()|/new>やアクセッサーL<sources()|/sources>, L<target()|/target>で指定した記法に基づいて変換します。
 
 =head2 アクセッサー
 
@@ -294,21 +324,28 @@ blah blah blah
 
     $source_notations_ref = $object->sources;
 
-blah blah blah
+変換元の記法を配列リファレンスで返します。
+リストで得たい場合、L<all_sources()|/all_sources>を使ってください。
 
     $source_notations_ref = $object->sources(\@notations);
 
-blah blah blah
+変換元の記法を配列リファレンスで与えます。
+使用出来る記法はコンストラクターL<new()|/new>と同じです。
+
+返り値は引数を与えない場合と同じです。
 
 =head3 C<< target >>
 
     $target_notation = $object->target;
 
-blah blah blah
+変換先の記法をスカラーで返します。
 
     $target_notation = $object->target($notation);
 
-blah blah blah
+変換先の記法をスカラーで与えます。
+使用出来る記法はコンストラクターL<new()|/new>と同じです。
+
+返り値は引数を与えない場合と同じです。
 
 =head2 ユーティリティー
 
@@ -316,17 +353,24 @@ blah blah blah
 
     @all_source_notations = $object->all_sources;
 
-blah blah blah
+変換元の記法をリストで返します。
+配列リファレンスで得たい場合、L<sources()|/sources>を使ってください。
 
 =head3 C<< add_sources >>
 
     $source_notations_ref = $object->add_sources(@adding_notations);
 
-blah blah blah
+変換元の記法をリストで指定して加えます。
+使用出来る記法はコンストラクターL<new()|/new>と同じです。
+
+追加後の記法を配列リファレンスで返します。
 
 =head3 C<< remove_sources >>
 
     $source_notations_ref = $object->remove_sources(@removing_notations);
+
+変換元の記法をリストで指定して除きます。
+削除後の記法を配列リファレンスで返します。
 
 =head1 関連情報
 
@@ -443,8 +487,8 @@ L<http://cpanratings.perl.org/dist/Lingua-EO-Orthography>
  ---------------------------- ------ ------ ------ ------ ------ ------ ------
  File                           stmt   bran   cond    sub    pod   time  total
  ---------------------------- ------ ------ ------ ------ ------ ------ ------
- .../Lingua/EO/Orthography.pm   68.5   50.0    n/a   66.7  100.0  100.0   66.7
- Total                          68.5   50.0    n/a   66.7  100.0  100.0   66.7
+ .../Lingua/EO/Orthography.pm  100.0  100.0  100.0  100.0  100.0  100.0  100.0
+ Total                         100.0  100.0  100.0  100.0  100.0  100.0  100.0
  ---------------------------- ------ ------ ------ ------ ------ ------ ------
 
 =head1 著者
