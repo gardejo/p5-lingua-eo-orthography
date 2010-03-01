@@ -66,7 +66,10 @@ sub sources {
     my ($self, $source_notation_candidates_ref) = @_;
 
     if (scalar @_ > 1) {    # $self->sources(undef) comes here and dies
-        if ($source_notation_candidates_ref eq ':all') {
+        if (
+            defined $source_notation_candidates_ref &&
+            $source_notation_candidates_ref eq ':all'
+        ) {
             $self->{sources} = [
                 grep {
                     $_ ne 'orthography';
@@ -121,7 +124,7 @@ sub add_sources {
         $self->_check_notations(@adding_notations);
     }
     catch {
-        confess "Could not push source notations because: " . $_;
+        confess "Could not add source notations because: " . $_;
     };
     @{ $self->{sources} } = uniq $self->all_sources, @adding_notations;
 
@@ -133,19 +136,21 @@ sub remove_sources {
 
     try {
         $self->_check_notations(@removing_notations);
+        die 'Converter must maintain at least one source notation'
+            if (scalar $self->all_sources) == (scalar uniq @removing_notations);
     }
     catch {
         confess "Could not remove source notations because: " . $_;
     };
 
     # Note: I dare do not use List::Compare to get complement notations
-    my %source_notation;
-    @source_notation{ $self->all_sources } = ();
-    map {
-        delete $source_notation{$_}
-            if exists $source_notation{$_};
-    } @removing_notations;
-    @{ $self->{sources} } = keys %source_notation;
+    my %removing_notation;
+    @removing_notation{ @removing_notations } = ();
+    $self->{sources} = [
+        grep {
+            ! exists $removing_notation{$_};
+        } $self->all_sources
+    ];
 
     return $self->{sources};
 }
@@ -163,7 +168,7 @@ sub convert {
                 neat($string)
         unless is_value($string);
 
-    my $source_pattern   = $self->_source_pattern( $self->sources );
+    my $source_pattern   = $self->_source_pattern( @{ $self->sources } );
     my $target_character = $self->_target_character( $self->target );
 
     $string =~ s{
@@ -201,6 +206,8 @@ sub _check_source_notations {
 
     confess 'Source notations must be an array reference'
         unless is_array_ref($source_notation_candidates_ref);
+    confess 'Source notations must be a nonnull array reference'
+        unless @$source_notation_candidates_ref;
 
     $self->_check_notations(@$source_notation_candidates_ref);
 
@@ -235,13 +242,13 @@ sub _notation {
 }
 
 sub _source_pattern {
-    my ($self, $source_notations_ref) = @_;
+    my ($self, @source_notations) = @_;
 
     my $regexp_assembler = Regexp::Assemble->new;
     my $notation_ref     = $self->_notation;
 
     SOURCE_NOTATION:
-    foreach my $source_notation (@$source_notations_ref) {
+    foreach my $source_notation (@source_notations) {
         SOURCE_CHARACTER:
         foreach my $source_character (
             @{ $notation_ref->{ $source_notation } }
@@ -409,6 +416,10 @@ blah blah blah
 B<This module is in stage of beta release, and API may be changed.
 Your feedback is welcome.>
 
+=head2 Catalogue of Notations
+
+blah blah blah
+
 =head2 Comparison with Lingua::EO::Supersignoj
 
  Viewpoints                 ::Supersignoj   ::Orthography               Note
@@ -419,11 +430,11 @@ Your feedback is welcome.>
  Can customize notation     Only 'u'        No (under consideration)    *3
  Can treat 'flughaveno'     No              No (under consideration)    *4
  API language               eo: Esperanto   en: English
- Can convert N:1            No              Yes                         *5
+ Can do N:1 conversion      No              Yes                         *5
  Speed                      Satisfied       About 400% faster           *6
- Immediate dependencies     3 (2 in core)   9 (4 in core)               *7
- Whole dependencies         3 (2 in core)   22 (12 in core)             *7
- Test case numbers          3               ****
+ Immediate dependencies     3? (2? in core) 9? (4? in core)             *7
+ Whole dependencies         3? (2? in core) 22? (12? in core)           *7
+ Test case numbers          3               75
  License                    Unknown         Perl (Artistic or GNU GPL)
  Last modified on           Mar. 2003       Mar. 2010
 
@@ -503,6 +514,8 @@ See F</examples/benchmark.pl> in this distribution.
 =item 7.
 
 The source of dependencies is L<http://deps.cpantesters.org/>.
+
+Such number excludes modules for building and testing.
 
 Any dependencies of L<Lingua::EO::Orthography|Lingua::EO::Orthography> have
 a certain favorable opinion. I quite agree with those recommendation.
@@ -692,8 +705,8 @@ below is the C<Devel::Cover> summary report on this distribution's test suite.
  ---------------------------- ------ ------ ------ ------ ------ ------ ------
  File                           stmt   bran   cond    sub    pod   time  total
  ---------------------------- ------ ------ ------ ------ ------ ------ ------
- .../Lingua/EO/Orthography.pm   68.5   50.0    n/a   66.7  100.0  100.0   66.7
- Total                          68.5   50.0    n/a   66.7  100.0  100.0   66.7
+ .../Lingua/EO/Orthography.pm  100.0  100.0  100.0  100.0  100.0  100.0  100.0
+ Total                         100.0  100.0  100.0  100.0  100.0  100.0  100.0
  ---------------------------- ------ ------ ------ ------ ------ ------ ------
 
 =head1 AUTHOR
