@@ -136,21 +136,22 @@ sub remove_sources {
 
     try {
         $self->_check_notations(@removing_notations);
+
+        # Note: I dare do not use List::Compare to get complement notations
+        my %removing_notation;
+        @removing_notation{ @removing_notations } = ();
+        $self->{sources} = [
+            grep {
+                ! exists $removing_notation{$_};
+            } $self->all_sources
+        ];
+
         die 'Converter must maintain at least one source notation'
-            if (scalar $self->all_sources) == (scalar uniq @removing_notations);
+            unless @{ $self->{sources} };
     }
     catch {
         confess "Could not remove source notations because: " . $_;
     };
-
-    # Note: I dare do not use List::Compare to get complement notations
-    my %removing_notation;
-    @removing_notation{ @removing_notations } = ();
-    $self->{sources} = [
-        grep {
-            ! exists $removing_notation{$_};
-        } $self->all_sources
-    ];
 
     return $self->{sources};
 }
@@ -256,7 +257,7 @@ sub _source_pattern {
             next SOURCE_CHARACTER
                 if $source_character =~ m{ \A [Uu] \z }xms;
             ( my $escaped_source_character = $source_character )
-                =~ s{ (?=\^) }{\\}xms;
+                =~ s{ (?=[\^\*\+]) }{\\}xms;
             $regexp_assembler->add($escaped_source_character);
         }
     }
@@ -346,13 +347,13 @@ __END__
 # POD
 # ****************************************************************
 
-=encoding utf8
+=encoding utf-8
 
 =pod
 
 =head1 NAME
 
-Lingua::EO::Orthography - A converter of notations (orthography and transliterations) for Esperanto characters
+Lingua::EO::Orthography - A converter of notations (orthography and substitute notations) for Esperanto characters
 
 =head1 VERSION
 
@@ -381,7 +382,7 @@ L<Lingua::EO::Orthography::JA|Lingua::EO::Orthography::JA>
     use utf8;
     use Lingua::EO::Orthography;
 
-    my ($converter, $source, $target);
+    my ($converter, $original, $converted);
 
     # Orthographize ...
     $converter = Lingua::EO::Orthography->new;
@@ -390,37 +391,171 @@ L<Lingua::EO::Orthography::JA|Lingua::EO::Orthography::JA>
         #     sources => ':all',
         #     target  => 'orthography',
         # );
-    $source = q(C^i-momente, la songha h'orajxo )
-            . q(^sprucigas aplauwdon.);         # Source: transliteration
-    $target = $converter->convert($source);     # Target: UTF-8 orthography
+    $original = q(C^i-momente, la songha h'orajxo )
+              . q(^sprucigas aplauwdon.);           # substitution
+    $converted = $converter->convert($original);    # UTF-8 orthography
     # The sentence means "In this moment, the dreamy chorus spurts applause."
 
     # Substitute ... (X-system)
-    $converter->sources([qw(orthography)]);     # (accepts plural notations)
+    $converter->sources([qw(orthography)]);         # (accepts plural notations)
     $converter->target('postfix_x');
         # Same as above:
         # $converter = Lingua::EO::Orthography->new(
         #     sources => [qw(orthography)],
         #     target  => 'postfix_x',
         # );
-    $source = "\x{108}i-momente, la son\x{11D}a \x{125}ora\x{135}o "
-            . "\x{153}prucigas apla\x{16D}don"; # Source: UTF-8 orthography
-    $target = $converter->convert($source);     # Target: X-system
+    $original = "\x{108}i-momente, la son\x{11D}a \x{125}ora\x{135}o "
+              . "\x{153}prucigas apla\x{16D}don";   # UTF-8 orthography
+    $converted = $converter->convert($original);    # X-system
 
 =head1 DESCRIPTION
 
-blah blah blah
+6 letters in Esperanto alphabet did not exist in ASCII.
+Their letters, which have supersigns (eo: supersignoj),
+are often spelled in substitute notations (en: surogataj skribosistemoj)
+for the history, namely, for the ages of typography and typewriter.
+Currently, it is not unusual to spell them in orthography (eo: ortografio)
+by the spread of Unicode (eo: Unikodo).
+However, there is still much environment
+where the input from a keyboard is difficult,
+and people may treat an old document described substitute notation.
+
+This object oriented module provids you a conversion of their notations.
 
 =head2 Caveat
 
-B<This module is in stage of beta release, and API may be changed.
+B<This module is in stage of beta release, and the API may be changed.
 Your feedback is welcome.>
 
-=head2 Catalogue of Notations
+=head2 Catalogue of notations
 
-blah blah blah
+The following notation names are usable in an argument of
+L<new()|/new>, L<add_sources()|/add_sources>, and so on.
+
+I am going to expand an API in the future,
+and you will can add notations except them.
+
+=over 4
+
+=item C<orthography>
+
+    Ĉ ĉ Ĝ ĝ Ĥ ĥ Ĵ ĵ Ŝ ŝ Ŭ ŭ
+
+    (\x{108} \x{109} \x{11C} \x{11D} \x{124} \x{125}
+     \x{134} \x{135} \x{15C} \x{15D} \x{16C} \x{16D})
+
+It is the I<orthography>.
+The converter treats letters with supersign, which exist in Unicode.
+The character encoding is UTF-8.
+
+You should the orthography today unless there is some particular reason
+because Unicode was spread sufficiently.
+Perl 5.8.1 or later also treat it correctly.
+
+I recommend that you treat UTF-8 flagged string in your program throughout and
+convert string in only input from external or output to external (on demand),
+for to work functions such as C<length()> correctly
+in the condition which turn L<utf8|utf8> pragma on.
+It is the same as the principle of L<Encode|Encode>.
+
+=item C<zamenhof>
+
+    Ch ch Gh gh Hh hh Jh jh Sh sh U  u
+
+It is a substitute notation, which places C<h> as a postfix,
+however, does not place it for C<u>.
+
+It was suggested by Dr. Zamenhof, the father of Esperanto,
+in I<Fundamento de Esperanto>
+and people called it I<Zamenhof system> (eo: I<Zamenhofa sistemo>).
+For this reason, people also called it I<the second orthography>,
+but it is not used very much today.
+
+It has a problem that string which range between roots (such as 'flug/haven/o')
+looks like substituted string in several words such as 'flughaveno' (airport).
+This module does not evade this problem at the present time.
+
+=item C<capital_zamenhof>
+
+    CH ch GH gh HH hh JH jh SH sh U  u
+
+It is a variant of L<capital_zamenhof notation|/capital_zamenhof>.
+
+It places a capital C<H> as a postfix of a capital alphabet.
+
+=item C<postfix_h>
+
+    Ch ch Gh gh Hh hh Jh jh Sh sh Uw uw
+
+It is an extended notation of L<capital_zamenhof notation|/capital_zamenhof>.
+
+It places C<w> as a postfix of C<u>.
+
+People called it I<H-system> (eo: I<H-sistemo>).
+
+=item C<postfix_capital_h>
+
+    CH ch GH gh HH hh JH jh SH sh UW uw
+
+It is a variant of L<postfix_h notation|/postfix_h>.
+
+It places a capital C<H> or C<W> as a postfix of a capital alphabet.
+
+=item C<postfix_x>
+
+    Cx cx Gx gx Hx hx Jx jx Sx sx Ux ux
+
+It is a substitute notation, which places C<x> as a postfix.
+
+People called it I<X-system> (eo: I<X-sistemo, iksa sistemo>).
+
+People widely use it as a substitute notation,
+because X does not exist in Esperanto alphabet,
+and was not used except for the case of
+to describe non-Esperanto word as the original language.
+
+=item C<postfix_capital_x>
+
+    CX cx GX gx HX hx JX jx SX sx UX ux
+
+It is a variant of L<postfix_x notation|/postfix_x>.
+
+It places a capital C<X> as a postfix of a capital alphabet.
+
+=item C<postfix_caret>
+
+    C^ c^ G^ g^ H^ h^ J^ j^ S^ s^ U^ u^
+
+It is a substitute notation, which places a caret C<^> as a postfix.
+
+People called it I<caret system> (eo: I<ĉapelita sistemo>).
+
+People often use it as a substitute notation,
+because caret have the same shape as circumflex.
+
+This module does not support a way,
+which describe C<u~> like C<u^> at the present time.
+
+=item C<postfix_apostrophe>
+
+    C' c' G' g' H' h' J' j' S' s' U' u'
+
+It is a substitute notation, which places an apostrophe C<^> as a postfix.
+
+=item C<prefix_caret>
+
+    ^C ^c ^G ^g ^H ^h ^J ^j ^S ^s ^U ^u
+
+It is a substitute notation, which places a caret C<^> as a prefix.
+
+=back
 
 =head2 Comparison with Lingua::EO::Supersignoj
+
+There is L<Lingua::EO::Supersignoj|Lingua::EO::Supersignoj> in CPAN.
+It provides us with correspondent functions of this module.
+
+I compare them by the following list:
 
  Viewpoints                 ::Supersignoj   ::Orthography               Note
  -------------------------- --------------- --------------------------- ----
@@ -432,9 +567,9 @@ blah blah blah
  API language               eo: Esperanto   en: English
  Can do N:1 conversion      No              Yes                         *5
  Speed                      Satisfied       About 400% faster           *6
- Immediate dependencies     3? (2? in core) 9? (4? in core)             *7
- Whole dependencies         3? (2? in core) 22? (12? in core)           *7
- Test case numbers          3               75
+ Immediate dependencies     1 (0 in core)   6 (2 in core)               *7
+ Whole dependencies         1 (0 in core)   15 (8 in core)              *7
+ Test case numbers          3               93                          *8
  License                    Unknown         Perl (Artistic or GNU GPL)
  Last modified on           Mar. 2003       Mar. 2010
 
@@ -499,6 +634,13 @@ I plan to design the API of this function:
 I expect that you may design your practical application
 to accept plural notations, from my experience.
 
+I included an example in the distribution.
+L<Lingua::EO::Orthography|Lingua::EO::Orthography> can convert string
+into the orthography at once, such as F<examples/converter.pl>.
+The correspondent in L<Lingua::EO::Supersignoj|Lingua::EO::Supersignoj> is
+F<examples/correspondent.pl>.
+In this case, you must convert string while you replace source notation.
+
 =item 6.
 
 L<Lingua::EO::Orthography|Lingua::EO::Orthography> can convert strings
@@ -525,6 +667,10 @@ I already abandon make this module to depend
 L<namespace::clean|namespace::clean>,
 L<namespace::autoclean|namespace::autoclean>, and so on.
 
+=item 8.
+
+Such number excludes author's tests.
+
 =back
 
 =head1 METHODS
@@ -533,57 +679,140 @@ L<namespace::autoclean|namespace::autoclean>, and so on.
 
 =head3 C<< new >>
 
-    $object = Lingua::EO::Orthography->new(%init_arg);
+    $converter = Lingua::EO::Orthography->new(%init_arg);
 
-blah blah blah
+Returns a L<Lingua::EO::Orthography|Lingua::EO::Orthography> object,
+which is a converter.
+
+Accepts a hash as arguments.
+You can assign C<sources> and/or C<target> as key of the hash.
+
+=over 4
+
+=item C<< sources => \@source_notations >>
+
+Accepts an array reference or C<:all>
+as source L<notations|/Catalogue of notations>.
+
+C<:all> is equivalent to
+L<zamenhof|/zamenhof>,
+L<capital_zamenhof|/capital_zamenhof>,
+L<postfix_h|/postfix_h>,
+L<postfix_capital_h|/postfix_capital_h>,
+L<postfix_x|/postfix_x>,
+L<postfix_capital_x|/postfix_capital_x>,
+L<postfix_caret|/postfix_caret>,
+L<postfix_apostrophe|/postfix_apostrophe> and
+L<prefix_caret|/prefix_caret>.
+
+If you omit to assign it, the converter consider that
+you assigned C<:all> to it.
+
+If you assign a value except C<:all> and an array reference,
+number of notation elements is 0 or
+notations elements has an unknown notation or C<undef>,
+the converter throws an exception.
+
+=item C<< target => $target_notation >>
+
+Accepts a string as target L<notation|/Catalogue of notations>.
+
+If you omit to assign it, the converter consider that
+you assigned L<orthography|/orthography> to it.
+
+If you assign an unknown notation or C<undef>,
+the converter throws an exception.
+
+=back
 
 =head2 Converter
 
 =head3 C<< convert >>
 
-    $converted_string = $object->convert($original_string);
+    $converted_string = $converter->convert($original_string);
 
-blah blah blah
+Accepts string as an argument, convert it, and returns converted string.
+Argument string was not polluted by this method, that is to say,
+argument string was not changed by side-effect of this method.
+A conversion of string is based on notations,
+which assigned at L<new()|/new> constructor and
+accessors of L<sources()|/sources> and L<target()|/target>.
+
+Strings are case-sensitive.
+That is to say, the converter consider C<cX> to substitute notations
+in L<postfix_x notation|/postfix_x>, and do not convert it.
+
+String of arguments should turn UTF8 flag on.
+String of return value also became on.
+
+An URL or an e-mail address may have string,
+which does not distinguished itself from substitute notation.
+If you do not will convert it, run L<convert()|/convert> each words
+after to C<split()> a sentence into words.
+This let you that the converter except string, which includes C<://> or C<@>,
+from the target of the conversion.
+See RFC 2396 and 3986 for URI, and RFC 5321 and 5322 for e-mail address.
+I described a concrete example to
+F<examples/ignore_addresses.pl> in the distribution.
 
 =head2 Accessors
 
 =head3 C<< sources >>
 
-    $source_notations_ref = $object->sources;
+    $source_notations_ref = $converter->sources;
 
-blah blah blah
+Returns source notations as an array reference.
+If you want to get it as a list, you can use L<all_sources()|/all_sources>.
 
-    $source_notations_ref = $object->sources(\@notations);
+    $source_notations_ref = $converter->sources(\@notations);
 
-blah blah blah
+Accepts an array reference as source notations.
+You can use notations as L<new()|/new> constructor.
+
+Return value is the same as when an argument was not passed.
 
 =head3 C<< target >>
 
-    $target_notation = $object->target;
+    $target_notation = $converter->target;
 
-blah blah blah
+Returns target notation as a scalar.
 
-    $target_notation = $object->target($notation);
+    $target_notation = $converter->target($notation);
 
-blah blah blah
+Accepts a string as target notation.
+You can use notations as L<new()|/new> constructor.
+
+Return value is the same as when an argument was not passed.
 
 =head2 Utilities
 
 =head3 C<< all_sources >>
 
-    @all_source_notations = $object->all_sources;
+    @all_source_notations = $converter->all_sources;
 
-blah blah blah
+Returns source notations as a list.
+If you want to get it as an array reference, you can use L<sources()|/sources>.
 
 =head3 C<< add_sources >>
 
-    $source_notations_ref = $object->add_sources(@adding_notations);
+    $source_notations_ref = $converter->add_sources(@adding_notations);
 
-blah blah blah
+Adds passed notations as a list to source notations.
+You can use notations as L<new()|/new> constructor.
+
+Returns source notations as an array reference.
 
 =head3 C<< remove_sources >>
 
-    $source_notations_ref = $object->remove_sources(@removing_notations);
+    $source_notations_ref = $converter->remove_sources(@removing_notations);
+
+Removes passed notations as a list from source notations.
+You can use notations as L<new()|/new> constructor.
+
+Returns rest source notations as an array reference.
+
+Notations after the removing must maintain at least 1.
+If you remove all notations, the converter throws an exception.
 
 =head1 SEE ALSO
 
@@ -621,18 +850,26 @@ More tests
 
 =item *
 
-To correctly convert C<flughaveno> (C<flug/haven/o>) in C<postfix_h> notation
-with user's lexicon
+Less dependencies
 
 =item *
 
-Don't to convert characters in string what formatted by URI (RFC 2396, 3986)
-and by mail address (RFC 5321, 5322)
+To provide an API to add user's notation
+
+=item *
+
+To correctly treat words such as C<flughaveno> (C<flug/haven/o>)
+in L<postfix_h notation|/postfix_x> with user's lexicon
+
+=item *
+
+To correctly treat words such as C<ankaŭ>
+in L<zamenhof notation|/zamenhof> with user's lexicon
 
 =item *
 
 To release a L<Moose|Moose> friendly class
-C<Lingua::EO::Orthography::Moosified> as an other distribution
+such as C<Lingua::EO::Orthography::Moosified>
 
 =back
 
@@ -660,7 +897,7 @@ You can find documentation for this module with the C<perldoc> command.
 
     % perldoc Lingua::EO::Orthography
 
-The Esperanto edition of documentation is available.
+The Esperanto edition of documentation is also available.
 
     % perldoc Lingua::EO::Orthography::EO
 

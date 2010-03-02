@@ -1,4 +1,4 @@
-=encoding utf8
+=encoding utf-8
 
 =pod
 
@@ -33,7 +33,7 @@ L<Lingua::EO::Orthography::JA|Lingua::EO::Orthography::JA> (この文書)
     use utf8;
     use Lingua::EO::Orthography;
 
-    my ($converter, $source, $target);
+    my ($converter, $original, $converted);
 
     # 正字法にする
     $converter = Lingua::EO::Orthography->new;
@@ -42,28 +42,29 @@ L<Lingua::EO::Orthography::JA|Lingua::EO::Orthography::JA> (この文書)
         #     sources => ':all',
         #     target  => 'orthography',
         # );
-    $source = q(C^i-momente, la songha h'orajxo )
-            . q(^sprucigas aplauwdon.);         # 変換元: 代用表記
-    $target = $converter->convert($source);     # 変換先: UTF-8 正字法
+    $original = q(C^i-momente, la songha h'orajxo )
+              . q(^sprucigas aplauwdon.);           # 変換元: 代用表記
+    $converted = $converter->convert($original);    # 変換先: UTF-8 正字法
     # この文は「幻想的な合唱曲への拍手がこの瞬間に噴出した。」という意味です
 
     # 代用表記する
-    $converter->sources([qw(orthography)]);     # (複数の記法を受け容れる)
+    $converter->sources([qw(orthography)]);         # (複数の記法を受け容れる)
     $converter->target('postfix_x');
         # これは上記と同じです:
         # $converter = Lingua::EO::Orthography->new(
         #     sources => [qw(orthography)],
         #     target  => 'postfix_x',
         # );
-    $source = "\x{108}i-momente, la son\x{11D}a \x{125}ora\x{135}o "
-            . "\x{153}prucigas apla\x{16D}don"; # 変換元: UTF-8 正字法
-    $target = $converter->convert($source);     # 変換先: X方式
+    $original = "\x{108}i-momente, la son\x{11D}a \x{125}ora\x{135}o "
+              . "\x{153}prucigas apla\x{16D}don";   # 変換元: UTF-8 正字法
+    $converted = $converter->convert($original);    # 変換先: X方式
 
 =head1 解説
 
-エスペラントのアルファベットのうち6文字はASCIIに存在しません。
+エスペラントのアルファベットのうち字上符付きの6文字はASCIIに存在しません。
 歴史的に、つまり活版印刷やタイプライターの時代から、それらの文字はしばしばL<代用表記|/記法>(eo: surogata skribosistemo)されて来ました。
-現在ではユニコード(en: Unicode, eo: Unikodo)の普及によって正字法(正書法, en: orthography, eo: ortografio)で表記することも珍しくありません。しかしキーボードからの入力が難しい環境もまだ多いでしょうし、代用表記で記述された昔の文書を取り扱うこともあるでしょう。
+現在ではユニコード(en: Unicode, eo: Unikodo)の普及によって正字法(正書法, en: orthography, eo: ortografio)で表記することも珍しくありません。
+しかし、キーボードからの入力が難しい環境もまだ多いでしょうし、代用表記で記述された昔の文書を取り扱うこともあるでしょう。
 
 このオブジェクト指向モジュールは、それらの記法を変換する機能を提供します。
 
@@ -82,113 +83,114 @@ B<このモジュールはベータ版リリースの段階にあり、APIは将
 
 =item C<orthography>
 
+    Ĉ ĉ Ĝ ĝ Ĥ ĥ Ĵ ĵ Ŝ ŝ Ŭ ŭ
+
+    (\x{108} \x{109} \x{11C} \x{11D} \x{124} \x{125}
+     \x{134} \x{135} \x{15C} \x{15D} \x{16C} \x{16D})
+
 I<正字法(正書法)>です。
 ユニコードに存在する字上符付き文字をそのまま取り扱います。
 文字コードはUTF-8です。
 
 ユニコードは十分に普及しているので、特段の理由がない限りは、今日では正字法を使うことが適当でしょう。
-Perlでもこれを正しく取り扱えます。
+Perl 5.8.1以降でもこれを正しく取り扱えます。
 
-L<utf8|utf8>プラグマを有効にした状態でC<length()>などを正しく働かせるためにも、あなたのプログラム内では一貫してUTF-8文字列を取り扱い、外部からの入力時や外部への出力時にのみ（必要に応じて）変換を掛けるという設計を推奨します。
+L<utf8|utf8>プラグマを有効にした状態でC<length()>などを正しく働かせるためにも、あなたのプログラム内では一貫してUTF-8文字列を取り扱い、外部からの入力時や外部への出力時にのみ(必要に応じて)変換を掛けるという設計を推奨します。
 これはL<Encode|Encode>モジュールの定石と同じです。
 
-# Fix me: あとで正字法に変える
-
-Cx cx Gx gx Hx hx Jx jx Sx sx Ux ux
-
 =item C<zamenhof>
+
+    Ch ch Gh gh Hh hh Jh jh Sh sh U  u
 
 アルファベットにC<h>を後置する代用表記法です。
 ただし、C<u>は代用表記しません。
 
-エスペラントの創始者であるザメンホフ博士が『I<エスペラントの基礎>』(I<Fundamento de Esperanto>)で提案した代用表記であり、I<ザメンホフ方式>(I<Zamenhof system>, I<Zamenhofa sistemo>)と呼ばれています。
-このため「第二の正字法」とも称されていますが、今日ではあまり使われていません。
+エスペラントの創始者であるザメンホフ博士が『I<エスペラントの基礎>』(I<Fundamento de Esperanto>)で提案した代用表記であり、I<ザメンホフ方式>(en: I<Zamenhof system>, eo: I<Zamenhofa sistemo>)と呼ばれています。
+このためI<第二の正字法>とも称されていますが、今日ではあまり使われていません。
 
-この方式には、'flughaveno'(空港: flug/haven/o)などの単語で、語根を跨ぐ文字の並びが代用表記されているように見えるという問題があります。
+この方式には、'flughaveno'(空港)などの単語で、語根('flug/haven/o')を跨ぐ文字の並びが代用表記されているように見えるという問題があります。
 このモジュールでも現時点ではこの問題を回避していません。
-
-Ch ch Gh gh Hh hh Jh jh Sh sh U  u
 
 =item C<capital_zamenhof>
 
-大文字のアルファベットには大文字でC<H>を後置するL<zamenhof方式|/zamenhof>です。
+    CH ch GH gh HH hh JH jh SH sh U  u
 
-CH ch GH gh HH hh JH jh SH sh U  u
+大文字のアルファベットには大文字でC<H>を後置するL<zamenhof方式|/zamenhof>です。
 
 =item C<postfix_h>
 
+    Ch ch Gh gh Hh hh Jh jh Sh sh Uw uw
+
 L<zamenhof方式|/zamenhof>を拡張したもので、C<u>にはC<w>を後置させるものです。
 
-I<H方式>(I<H-system>, I<H-sistemo>)と呼ばれています。
-
-Ch ch Gh gh Hh hh Jh jh Sh sh Uw uw
+I<H方式>(en: I<H-system>, eo: I<H-sistemo>)と呼ばれています。
 
 =item C<postfix_capital_h>
 
-大文字のアルファベットには大文字でC<H>やC<W>を後置するL<postfix_h方式|/postfix_h>です。
+    CH ch GH gh HH hh JH jh SH sh UW uw
 
-CH ch GH gh HH hh JH jh SH sh UW uw
+大文字のアルファベットには大文字でC<H>やC<W>を後置するL<postfix_h方式|/postfix_h>です。
 
 =item C<postfix_x>
 
+    Cx cx Gx gx Hx hx Jx jx Sx sx Ux ux
+
 アルファベットにC<x>を後置する代用表記法です。
 
-I<X方式>(I<X-system>, I<X-sistemo>)と呼ばれています。
+I<X方式>(en: I<X-system>, eo: I<X-sistemo, iksa sistemo>)と呼ばれています。
 
-Cx cx Gx gx Hx hx Jx jx Sx sx Ux ux
+C<x>がエスペラントのアルファベットに存在せず、エスペラント以外の単語を原語表記する場合を除いて使われる機会がないことから、代用表記の一つとして広く使われています。
 
 =item C<postfix_capital_x>
 
-大文字のアルファベットには大文字でC<X>を後置するL<postfix_x方式|/postfix_x>です。
+    CX cx GX gx HX hx JX jx SX sx UX ux
 
-CX cx GX gx HX hx JX jx SX sx UX ux
+大文字のアルファベットには大文字でC<X>を後置するL<postfix_x方式|/postfix_x>です。
 
 =item C<postfix_caret>
 
+    C^ c^ G^ g^ H^ h^ J^ j^ S^ s^ U^ u^
+
 アルファベットにキャレットC<^>を後置する代用表記法です。
 
-# Fix me: あとで正字法に変える
+I<キャレット方式>(I<caret system>, I<ĉapelita sistemo>)と呼ばれています。
 
-I<キャレット方式>(I<caret system>, I<c^apelita sistemo sistemo>)と呼ばれています。
-
-キャレット(caret)がサーカムフレックス(circumflex)と同じ形であることから、代用表記の一つとして使われることがあります。
+キャレット(en: caret)がサーカムフレックス(en: circumflex)と同じ形であることから、代用表記の一つとして使われることがあります。
 
 このモジュールではC<u^>をC<u~>として表記する方法には現時点では対応していません。
 
-C^ c^ G^ g^ H^ h^ J^ j^ S^ s^ U^ u^
-
 =item C<postfix_apostrophe>
+
+    C' c' G' g' H' h' J' j' S' s' U' u'
 
 アルファベットにアポストロフィーC<'>を後置する代用表記法です。
 
-C' c' G' g' H' h' J' j' S' s' U' u'
-
 =item C<prefix_caret>
 
-アルファベットにキャレットC<^>を前置する代用表記法です。
+    ^C ^c ^G ^g ^H ^h ^J ^j ^S ^s ^U ^u
 
-^C ^c ^G ^g ^H ^h ^J ^j ^S ^s ^U ^u
+アルファベットにキャレットC<^>を前置する代用表記法です。
 
 =back
 
 =head2 Lingua::EO::Supersignojとの比較
 
-このモジュールと同等の機能を提供するモジュールとして、C<Lingua::EO::Orthography|Lingua::EO::Orthography>がCPANにあります。
-以下の表でそれらを比較します。
+このモジュールと同等の機能を提供するモジュールとして、L<Lingua::EO::Supersignoj|Lingua::EO::Supersignoj>がCPANにあります。
+以下の表でそれらを比較します:
 
  観点                       ::Supersignoj   ::Orthography               備考
  -------------------------- --------------- --------------------------- ----
  バージョン                 0.02            0.00
- @linesを変換できる         はい            いいえ                      *1
+ @linesを変換出来る         はい            いいえ                      *1
  アクセッサーがある         はい            はい(有用なメソッド付き)    *2
- 記法をカスタマイズできる   'u'のみ可能     いいえ(検討中)              *3
+ 記法をカスタマイズ出来る   'u'のみ可能     いいえ(検討中)              *3
  'flughaveno'を取り扱える   いいえ          いいえ(検討中)              *4
  APIの言語                  eo:エスペラント en:英語
- 多対1の変換ができる        いいえ          はい                        *5
+ 多対1の変換が出来る        いいえ          はい                        *5
  速度                       満足な速さ      約4倍速い                   *6
- 直接の依存                 3? (コアは2?)   9? (コアは4?)               *7
- 全体の依存                 3? (コアは2?)   22? (コアは12?)             *7
- テストケース数             3               75
+ 直接の依存                 1 (コアは0)     6 (コアは2)                 *7
+ 全体の依存                 1 (コアは0)     15 (コアは8)                *7
+ テストケース数             3               93                          *8
  使用許諾条件(ライセンス)   不明            Perl(ArtisticかGNU GPL)
  最終更新                   2003年3月       2010年3月
 
@@ -250,14 +252,18 @@ L<Lingua::EO::Orthography|Lingua::EO::Orthography>にはL<all_sources()|/all_sou
 
 あなたが複数の記法を受け容れられるように実際のアプリケーションを設計するであろうことを、開発者は自らの経験によって想定しています。
 
+このディストリビューションに実例を同梱しています。
+L<Lingua::EO::Orthography|Lingua::EO::Orthography>の場合はF<examples/converter.pl>のように一回のL<convert()|/convert>で正字法に変換出来ます。
+これに相当するL<Lingua::EO::Supersignoj|Lingua::EO::Supersignoj>の処理はF<examples/correspondent.pl>であり、変換元の記法を差し替えながら変換する必要があります。
+
 =item 6.
 
 L<Lingua::EO::Orthography|Lingua::EO::Orthography>はL<Lingua::EO::Supersignoj|Lingua::EO::Supersignoj>より約4倍速く文字列を変換出来ます。
 
 これは文字列置換に使う正規表現パターンと文字変換テーブルをL<Memoize|Memoize>モジュールによりキャッシュしているためです。
-さらに、L<Lingua::EO::Orthography|Lingua::EO::Orthography>は複数の記法による文字を一度に変換することが出来ます。
+さらに、L<Lingua::EO::Orthography|Lingua::EO::Orthography>は複数の記法が混じった文字列を一度に変換することが出来ます。
 
-このディストリビューションに同梱されているF</examples/benchmark.pl>を調べてください。
+F<examples/benchmark.pl>としてこのディストリビューションにベンチマークスクリプトを同梱しています。
 
 =item 7.
 
@@ -271,6 +277,10 @@ L<Lingua::EO::Orthography|Lingua::EO::Orthography>のどの依存モジュール
 しかし、開発者は依存モジュールを減らすことを検討しています。
 既にL<namespace::clean|namespace::clean>, L<namespace::autoclean|namespace::autoclean>などへの依存は断念しています。
 
+=item 8.
+
+上記の数は開発者テスト(en: author's test)を除いたものです。
+
 =back
 
 =head1 メソッド
@@ -279,27 +289,28 @@ L<Lingua::EO::Orthography|Lingua::EO::Orthography>のどの依存モジュール
 
 =head3 C<< new >>
 
-    $object = Lingua::EO::Orthography->new(%init_arg);
+    $converter = Lingua::EO::Orthography->new(%init_arg);
 
-L<Lingua::EO::Orthography|Lingua::EO::Orthography>オブジェクトを返します。
+コンバーターであるL<Lingua::EO::Orthography|Lingua::EO::Orthography>オブジェクトを返します。
 
-引数としてハッシュC<%init_arg>を受け容れます。ハッシュのキーにはC<sources>とC<target>のいずれか、ないしは両方を指定できます。
+引数としてハッシュを受け容れます。
+ハッシュのキーにはC<sources>とC<target>のいずれか、ないしは両方を指定出来ます。
 
 =over 4
 
 =item C<< sources => \@source_notations >>
 
-変換元のL<記法|/記法>を配列リファレンスまたはC<:all>で指定します。
+変換元のL<記法|/記法>群を配列リファレンスまたはC<:all>で指定します。
 
 C<:all>はL<zamenhof|/zamenhof>, L<capital_zamenhof|/capital_zamenhof>, L<postfix_h|/postfix_h>, L<postfix_capital_h|/postfix_capital_h>, L<postfix_x|/postfix_x>, L<postfix_capital_x|/postfix_capital_x>, L<postfix_caret|/postfix_caret>, L<postfix_apostrophe|/postfix_apostrophe>, L<prefix_caret|/prefix_caret>全ての指定と等価です。
 
 省略時にはC<:all>を指定したものとみなします。
 
-C<:all>または配列リファレンス以外の値を指定した場合や、配列要素に未知の記法やC<undef>が含まれる場合には、例外を送出します。
+C<:all>または配列リファレンス以外の値を指定した場合や、配列要素数が0である場合や、配列要素に未知の記法やC<undef>が含まれる場合には、例外を送出します。
 
 =item C<< target => $target_notation >>
 
-変換先のL<記法|/記法>をスカラーで指定します。
+変換先のL<記法|/記法>を文字列で指定します。
 
 省略時にはL<orthography|/orthography>を指定したものとみなします。
 
@@ -311,66 +322,81 @@ C<:all>または配列リファレンス以外の値を指定した場合や、�
 
 =head3 C<< convert >>
 
-    $converted_string = $object->convert($original_string);
+    $converted_string = $converter->convert($original_string);
 
 引数として与えた文字列を変換し、変換後の文字列を返します。
-引数は汚しません（つまり、副作用として引数の文字列を変更することはありません）。
+引数は汚しません(つまり、副作用として引数の文字列が変更されることはありません)。
+文字列の変換はコンストラクターL<new()|/new>やアクセッサーL<sources()|/sources>, L<target()|/target>で指定した記法に基づいて実行されます。
 
-コンストラクターL<new()|/new>やアクセッサーL<sources()|/sources>, L<target()|/target>で指定した記法に基づいて変換します。
+文字列の大文字・小文字は区別されます。
+つまり、L<postfix_x記法|/postfix_x>であってもC<cX>は代用表記と見なさず、変換しません。
+
+引数の文字列はUTF8フラグがオンになっている必要があります。
+戻り値の文字列もUTF8フラグがオンになります。
+
+URLやメールアドレスなどには、代用表記と見分けの付かない文字列が含まれることがあります。
+それらが変換されないようにしたい場合には、文を一旦単語列にC<split()>した上で、それぞれの単語についてL<convert()|/convert>を実行してください。
+これにより、C<://>やC<@>という文字列を含む単語を変換対象から外すことが出来ます。URIはRFC 2396, 3986を、メールアドレスはRFC 5321, 5322を、それぞれ参照してください。
+また、このディストリビューションに同梱されているF<examples/ignore_addresses.pl>に具体例を記述しています。
 
 =head2 アクセッサー
 
 =head3 C<< sources >>
 
-    $source_notations_ref = $object->sources;
+    $source_notations_ref = $converter->sources;
 
-変換元の記法を配列リファレンスで返します。
+変換元の記法群を配列リファレンスで返します。
 リストで得たい場合、L<all_sources()|/all_sources>を使ってください。
 
-    $source_notations_ref = $object->sources(\@notations);
+    $source_notations_ref = $converter->sources(\@notations);
 
-変換元の記法を配列リファレンスで与えます。
+変換元の記法群を配列リファレンスで与えます。
 使用出来る記法はコンストラクターL<new()|/new>と同じです。
 
-返り値は引数を与えない場合と同じです。
+戻り値は引数を与えない場合と同じです。
 
 =head3 C<< target >>
 
-    $target_notation = $object->target;
+    $target_notation = $converter->target;
 
-変換先の記法をスカラーで返します。
+変換先の記法を文字列で返します。
 
-    $target_notation = $object->target($notation);
+    $target_notation = $converter->target($notation);
 
-変換先の記法をスカラーで与えます。
+変換先の記法を文字列で与えます。
 使用出来る記法はコンストラクターL<new()|/new>と同じです。
 
-返り値は引数を与えない場合と同じです。
+戻り値は引数を与えない場合と同じです。
 
 =head2 ユーティリティー
 
 =head3 C<< all_sources >>
 
-    @all_source_notations = $object->all_sources;
+    @all_source_notations = $converter->all_sources;
 
-変換元の記法をリストで返します。
+変換元の記法群をリストで返します。
 配列リファレンスで得たい場合、L<sources()|/sources>を使ってください。
 
 =head3 C<< add_sources >>
 
-    $source_notations_ref = $object->add_sources(@adding_notations);
+    $source_notations_ref = $converter->add_sources(@adding_notations);
 
-変換元の記法をリストで指定して加えます。
+変換元の記法群をリストで指定して加えます。
 使用出来る記法はコンストラクターL<new()|/new>と同じです。
 
-追加後の記法を配列リファレンスで返します。
+追加後の記法群を配列リファレンスで返します。
 
 =head3 C<< remove_sources >>
 
-    $source_notations_ref = $object->remove_sources(@removing_notations);
+    $source_notations_ref = $converter->remove_sources(@removing_notations);
 
-変換元の記法をリストで指定して除きます。
-削除後の記法を配列リファレンスで返します。
+変換元の記法群をリストで指定して除きます。
+使用出来る記法はコンストラクターL<new()|/new>と同じです。
+
+削除後の記法群を配列リファレンスで返します。
+
+削除後の記法は最低でも1つ存在していなければなりません。
+全ての記法が削除された場合、例外を送出します。
 
 =head1 関連情報
 
@@ -404,18 +430,23 @@ L<http://freshmeat.net/projects/eoconv/>
 
 =item *
 
-To correctly convert C<flughaveno> (C<flug/haven/o>) in C<postfix_h> notation
-with user's lexicon.
+依存モジュールの削減
 
 =item *
 
-Don't to convert characters in string what formatted by URI (RFC 2396, 3986)
-and by mail address (RFC 5321, 5322).
+ユーザー記法を追加するAPIの提供
 
 =item *
 
-To release a L<Moose|Moose> friendly class
-C<Lingua::EO::Orthography::Moosified> as an other distribution.
+ユーザー辞書によってC<flug/haven/o>などの単語をL<postfix_h記法|/postfix_h>で正確に取り扱うこと
+
+=item *
+
+ユーザー辞書によってC<ankaŭ>などの単語をL<zamenhof記法|/zamenhof>で正確に取り扱うこと
+
+=item *
+
+L<Moose|Moose>やL<Mouse|Mouse>に親和するクラスのリリース(C<Lingua::EO::Orthography::Moosified>など)
 
 =back
 
