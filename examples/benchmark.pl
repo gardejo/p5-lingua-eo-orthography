@@ -70,18 +70,18 @@ AMD Opteron 252 @ 2.6GHz * 2, 2GB RAM):
 
  ----------------------------------------------------------------
  Benchmark: timing 50000 iterations of Orthography->new, Supersignoj->nova...
- Orthography->new:  3 wallclock secs ( 2.89 usr +  0.00 sys =  2.89 CPU) @ 17301.04/s (n=50000)
- Supersignoj->nova:  4 wallclock secs ( 3.77 usr +  0.00 sys =  3.77 CPU) @ 13276.69/s (n=50000)
+ Orthography->new:  3 wallclock secs ( 3.22 usr +  0.00 sys =  3.22 CPU) @ 15532.77/s (n=50000)
+ Supersignoj->nova:  5 wallclock secs ( 4.73 usr +  0.00 sys =  4.73 CPU) @ 10561.89/s (n=50000)
                       Rate Supersignoj->nova  Orthography->new
- Supersignoj->nova 13277/s                --              -23%
- Orthography->new  17301/s               30%                --
+ Supersignoj->nova 10562/s                --              -32%
+ Orthography->new  15533/s               47%                --
  ----------------------------------------------------------------
  Benchmark: timing 50000 iterations of Orthography->convert, Supersignoj->transkodigu...
- Orthography->convert:  2 wallclock secs ( 1.64 usr +  0.00 sys =  1.64 CPU) @ 30469.23/s (n=50000)
- Supersignoj->transkodigu:  9 wallclock secs ( 8.97 usr +  0.00 sys =  8.97 CPU) @ 5574.76/s (n=50000)
+ Orthography->convert:  2 wallclock secs ( 1.90 usr +  0.00 sys =  1.90 CPU) @ 26246.72/s (n=50000)
+ Supersignoj->transkodigu: 10 wallclock secs ( 9.77 usr +  0.00 sys =  9.77 CPU) @ 5119.80/s (n=50000)
                              Rate Supersignoj->transkodigu   Orthography->convert
- Supersignoj->transkodigu  5575/s                       --                   -82%
- Orthography->convert     30469/s                     447%                     --
+ Supersignoj->transkodigu  5120/s                       --                   -80%
+ Orthography->convert     26247/s                     413%                     --
 
 =head1 TO DO
 
