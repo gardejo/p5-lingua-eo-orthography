@@ -37,11 +37,11 @@ __END__
 
 =head1 NAME
 
-converter.pl - An example of converting with Lingua::EO::Orthography
+converter.pl - An example of converting string with Lingua::EO::Orthography
 
 =head1 DESCRIPTION
 
-This is an example of converting with
+This is an example of converting string with
 L<Lingua::EO::Orthography|Lingua::EO::Orthography>.
 
 Please run this script on an UTF-8 available console,
