@@ -71,33 +71,40 @@ sub test_orthographize {
 
     # Note: Memoized _source_pattern() should be passed @source_notations,
     #       instead of $source_notations_ref
-    foreach my $transliteration ( $self->transliterations ) {
+    foreach my $substitution ( $self->substitutions ) {
         is_deeply(
-            $converter->sources([ $transliteration ]),
-            [ $transliteration ],
+            $converter->sources([ $substitution ]),
+            [ $substitution ],
             sprintf(
                 'Get $converter->sources: [ %s ]',
-                    $transliteration,
+                    $substitution,
             ),
         );
+        my $converted = $converter->convert(
+            $self->string_of( $substitution )
+        );
         is(
-            $converter->convert( $self->string_of( $transliteration ) ),
+            $converted,
             $self->string_of(
-                  $transliteration =~ m{zamenhof} ? $orthography . '_u'
+                  $substitution =~ m{zamenhof} ? $orthography . '_u'
                 :                                   $orthography
             ),
             sprintf(
                 "Convert (orthographize): from %s => to %s",
-                    $transliteration,
+                    $substitution,
                     $orthography,
             ),
+        );
+        ok(
+            utf8::is_utf8($converted),
+            'Converted string turned utf8 flag on',
         );
     }
 
     return;
 }
 
-sub test_transliterize {
+sub test_substitutize {
     my $self = shift;
 
     my $orthography = $self->orthography;
@@ -111,23 +118,30 @@ sub test_transliterize {
         ),
     );
 
-    foreach my $transliteration ( $self->transliterations ) {
+    foreach my $substitution ( $self->substitutions ) {
         is(
-            $converter->target( $transliteration ),
-            $transliteration,
+            $converter->target( $substitution ),
+            $substitution,
             sprintf(
                 'Get $converter->target: %s',
-                    $transliteration,
+                    $substitution,
             ),
         );
+        my $converted = $converter->convert(
+            $self->string_of( $orthography )
+        );
         is(
-            $converter->convert( $self->string_of( $orthography ) ),
-            $self->string_of( $transliteration ),
+            $converted,
+            $self->string_of( $substitution ),
             sprintf(
-                "Convert (transliterize): from %s => to %s",
+                "Convert (substitutize): from %s => to %s",
                     $orthography,
-                    $transliteration,
+                    $substitution,
             ),
+        );
+        ok(
+            utf8::is_utf8($converted),
+            'Converted string turned utf8 flag on',
         );
     }
 
@@ -361,7 +375,7 @@ sub test_flughaveno {
 
     TODO: {
         local $TODO = 'Some words have border between roots '
-                    . 'as if it was transliterized';
+                    . 'as if it was substitutized';
 
         is(
             $encoding->encode( $converter->convert('flughaveno') ),
@@ -384,7 +398,7 @@ sub class {
     return q(Lingua::EO::Orthography);
 }
 
-sub transliterations {
+sub substitutions {
     return qw(
         postfix_x
         postfix_capital_x
@@ -494,7 +508,8 @@ Test::Lingua::EO::Orthography::Base -
 
 =head1 DESCRIPTION
 
-blah blah blah
+This class provides us with basic test cases for
+L<Lingua::EO::Orthography|Lingua::EO::Orthography>.
 
 =head1 AUTHOR
 

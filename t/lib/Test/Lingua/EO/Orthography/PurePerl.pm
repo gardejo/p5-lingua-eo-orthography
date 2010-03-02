@@ -30,7 +30,7 @@ sub test_any : Tests {
     $self->test_basic;
 
     $self->test_orthographize;
-    $self->test_transliterize;
+    $self->test_substitutize;
     $self->test_plurally_orthographize;
 
     $self->test_exception_on_sources;
@@ -66,7 +66,8 @@ Test::Lingua::EO::Orthography::PurePerl -
 
 =head1 DESCRIPTION
 
-blah blah blah
+This class runs several test cases for
+L<Lingua::EO::Orthography|Lingua::EO::Orthography>.
 
 =head1 AUTHOR
 
