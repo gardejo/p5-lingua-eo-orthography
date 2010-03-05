@@ -1,14 +1,12 @@
 =encoding utf-8
 
-=pod
-
 =head1 名称
 
 Lingua::EO::Orthography::JA - エスペラント文字の記法(正字法と代用表記)の変換器
 
 =head1 バージョン
 
-この文書はC<Lingua::EO::Orthography>のバージョンC<0.00>について記述しています。
+この文書はL<Lingua::EO::Orthography|Lingua::EO::Orthography>のバージョンC<0.00>について記述しています。
 
 =head2 翻訳
 
@@ -37,27 +35,19 @@ L<Lingua::EO::Orthography::JA|Lingua::EO::Orthography::JA> (この文書)
 
     # 正字法にする
     $converter = Lingua::EO::Orthography->new;
-        # これは上記と同じです:
-        # $converter = Lingua::EO::Orthography->new(
-        #     sources => ':all',
-        #     target  => 'orthography',
-        # );
-    $original = q(C^i-momente, la songha h'orajxo )
-              . q(^sprucigas aplauwdon.);           # 変換元: 代用表記
-    $converted = $converter->convert($original);    # 変換先: UTF-8 正字法
-    # この文は「幻想的な合唱曲への拍手がこの瞬間に噴出した。」という意味です
+    $original  = q(C^i-momente, la songha h'orajxo ^sprucigas aplauwdon.);
+    $converted = $converter->convert($original);
 
-    # 代用表記する
-    $converter->sources([qw(orthography)]);         # (複数の記法を受け容れる)
+    # 代用表記する (X記法)
+    $converter->sources([qw(orthography)]); # (複数の記法を受け容れる)
     $converter->target('postfix_x');
         # これは上記と同じです:
         # $converter = Lingua::EO::Orthography->new(
         #     sources => [qw(orthography)],
         #     target  => 'postfix_x',
         # );
-    $original = "\x{108}i-momente, la son\x{11D}a \x{125}ora\x{135}o "
-              . "\x{153}prucigas apla\x{16D}don";   # 変換元: UTF-8 正字法
-    $converted = $converter->convert($original);    # 変換先: X方式
+    $original  = q(Ĉi-momente, la sonĝa ĥoraĵo ŝprucigas aplaŭdon);
+    $converted = $converter->convert($original);
 
 =head1 解説
 
@@ -75,7 +65,7 @@ B<このモジュールはベータ版リリースの段階にあり、APIは将
 
 =head2 記法の一覧
 
-以下の記法名はL<new()|/new>やL<add_sources()|/add_sources>などの引数に使えます。
+以下の記法名はL<new()|/new>やL<add_sources()|/add_sources>などで使えます。
 
 これら以外の記法を動的に追加出来るよう、将来的にAPIを拡張する予定です。
 
@@ -88,7 +78,7 @@ B<このモジュールはベータ版リリースの段階にあり、APIは将
     (\x{108} \x{109} \x{11C} \x{11D} \x{124} \x{125}
      \x{134} \x{135} \x{15C} \x{15D} \x{16C} \x{16D})
 
-I<正字法(正書法)>です。
+エスペラントアルファベットのI<正字法(正書法)>です。
 ユニコードに存在する字上符付き文字をそのまま取り扱います。
 文字コードはUTF-8です。
 
@@ -96,7 +86,7 @@ I<正字法(正書法)>です。
 Perl 5.8.1以降でもこれを正しく取り扱えます。
 
 L<utf8|utf8>プラグマを有効にした状態でC<length()>などを正しく働かせるためにも、あなたのプログラム内では一貫してUTF-8文字列を取り扱い、外部からの入力時や外部への出力時にのみ(必要に応じて)変換を掛けるという設計を推奨します。
-これはL<Encode|Encode>モジュールの定石と同じです。
+これはL<Encode|Encode>モジュールやL<Perl IOレイヤー|perlio>の定石と同じです。
 
 =item C<zamenhof>
 
@@ -108,7 +98,7 @@ L<utf8|utf8>プラグマを有効にした状態でC<length()>などを正しく
 エスペラントの創始者であるザメンホフ博士が『I<エスペラントの基礎>』(I<Fundamento de Esperanto>)で提案した代用表記であり、I<ザメンホフ方式>(en: I<Zamenhof system>, eo: I<Zamenhofa sistemo>)と呼ばれています。
 このためI<第二の正字法>とも称されていますが、今日ではあまり使われていません。
 
-この方式には、'flughaveno'(空港)などの単語で、語根('flug/haven/o')を跨ぐ文字の並びが代用表記されているように見えるという問題があります。
+この方式には、'flughaveno'(ja: '空港')などの単語で、語根('flug/haven/o')を跨ぐ文字の並びが代用表記されているように見えるという問題があります。
 このモジュールでも現時点ではこの問題を回避していません。
 
 =item C<capital_zamenhof>
@@ -293,7 +283,7 @@ L<Lingua::EO::Orthography|Lingua::EO::Orthography>のどの依存モジュール
 
 コンバーターであるL<Lingua::EO::Orthography|Lingua::EO::Orthography>オブジェクトを返します。
 
-引数としてハッシュを受け容れます。
+変換対称軸としてハッシュを受け容れます。
 ハッシュのキーにはC<sources>とC<target>のいずれか、ないしは両方を指定出来ます。
 
 =over 4
@@ -324,12 +314,12 @@ C<:all>または配列リファレンス以外の値を指定した場合や、�
 
     $converted_string = $converter->convert($original_string);
 
-引数として与えた文字列を変換し、変換後の文字列を返します。
+与えた文字列を変換し、変換後の文字列を返します。
 引数は汚しません(つまり、副作用として引数の文字列が変更されることはありません)。
 文字列の変換はコンストラクターL<new()|/new>やアクセッサーL<sources()|/sources>, L<target()|/target>で指定した記法に基づいて実行されます。
 
 文字列の大文字・小文字は区別されます。
-つまり、L<postfix_x記法|/postfix_x>であってもC<cX>は代用表記と見なさず、変換しません。
+つまり、L<'postfix_x'記法|/postfix_x>であってもC<cX>は代用表記と見なさず、変換しません。
 
 引数の文字列はUTF8フラグがオンになっている必要があります。
 戻り値の文字列もUTF8フラグがオンになります。
@@ -438,11 +428,11 @@ L<http://freshmeat.net/projects/eoconv/>
 
 =item *
 
-ユーザー辞書によってC<flug/haven/o>などの単語をL<postfix_h記法|/postfix_h>で正確に取り扱うこと
+ユーザー辞書によってC<flug/haven/o>などの単語をL<'postfix_h'記法|/postfix_h>で正確に取り扱うこと
 
 =item *
 
-ユーザー辞書によってC<ankaŭ>などの単語をL<zamenhof記法|/zamenhof>で正確に取り扱うこと
+ユーザー辞書によってC<ankaŭ>などの単語をL<'zamenhof'記法|/zamenhof>で正確に取り扱うこと
 
 =item *
 
@@ -460,7 +450,7 @@ L<Moose|Moose>やL<Mouse|Mouse>に親和するクラスのリリース(C<Lingua:
 
 =head2 提案やバグ報告の方法
 
-何かバグを発見されたら、機能のご要望がありましたら、または改善のためのご意見がありましたら、メール(C<bug-lingua-eo-orthography at rt.cpan.org>宛)で報告してください。
+何かバグを発見されたら、機能のご要望がありましたら、または改善のためのご意見がありましたら、メール(C<< <bug-lingua-eo-orthography at rt dot cpan dot org> >>宛)で報告してください。
 または、Webインターフェース(L<http://rt.cpan.org/Public/Bug/Report.html?Queue=Lingua-EO-Orthography>)を使って報告してください。
 これによって、その報告内容が開発者へ通知されます。
 さらに、バグや要望の対応状況について、報告者が通知を自動的に受けることも出来ます。
@@ -526,24 +516,37 @@ L<http://cpanratings.perl.org/dist/Lingua-EO-Orthography>
 
 =over 4
 
-=item 守屋 雅樹, MORIYA Masaki (a.k.a. Gardejo)
+=item 守屋 雅樹 (Gardejo) (en: MORIYA Masaki, alias Gardejo)
 
 C<< <moriya at cpan dot org> >>,
 L<http://ttt.ermitejo.com/>
 
 =back
 
+=head2 訳註: 訳者
+
+=over 4
+
+=item 守屋 雅樹 (Gardejo) (en: MORIYA Masaki, alias Gardejo)
+
+C<< <moriya at cpan dot org> >>,
+L<http://ttt.ermitejo.com/>
+
+=back
+
+=head1 謝辞
+
+=over 4
+
+=item *
+
+Juerd Waalboerはこのモジュールが参考にしているL<Lingua::EO::Supersignoj|Lingua::EO::Supersignoj>を著しました。
+
+=back
+
 =head1 著作権と使用許諾条件
 
-Copyright (c) 2010 by MORIYA Masaki (a.k.a. Gardejo),
-L<http://ttt.ermitejo.com/>.
-
-This module is free software;
-you can redistribute it and/or modify it under the same terms as Perl itself.
-See L<perlgpl|perlgpl> and L<perlartistic|perlartistic>.
-
-The full text of the license can be found in the F<LICENSE> file
-included with this distribution.
+著作権保有 (c) 2010 守屋 雅樹 (Gardejo)
 
 このモジュールはフリーソフトウェアです。
 あなたはこれをPerlと同じように自由に再配布・改変することが出来ます。
@@ -551,15 +554,15 @@ included with this distribution.
 
 使用許諾条件の全文はこのディストリビューションに同梱されているF<LICENSE>ファイルにあります。
 
-=head1 訳者
+=head2 訳註: 著作権と使用許諾条件の原文
 
-=over 4
+Copyright (c) 2010 MORIYA Masaki, alias Gardejo
 
-=item 守屋 雅樹, MORIYA Masaki (a.k.a. Gardejo)
+This module is free software;
+you can redistribute it and/or modify it under the same terms as Perl itself.
+See L<perlgpl|perlgpl> and L<perlartistic|perlartistic>.
 
-C<< <moriya at cpan dot org> >>,
-L<http://ttt.ermitejo.com/>
-
-=back
+The full text of the license can be found in the F<LICENSE> file
+included with this distribution.
 
 =cut

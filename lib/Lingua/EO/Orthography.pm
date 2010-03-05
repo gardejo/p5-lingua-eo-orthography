@@ -349,15 +349,15 @@ __END__
 
 =encoding utf-8
 
-=pod
-
 =head1 NAME
 
 Lingua::EO::Orthography - A converter of notations (orthography and substitute notations) for Esperanto characters
 
 =head1 VERSION
 
-This document describes C<Lingua::EO::Orthography> version C<0.00>.
+This document describes
+L<Lingua::EO::Orthography|Lingua::EO::Orthography>
+version C<0.00>.
 
 =head2 Translations
 
@@ -384,52 +384,44 @@ L<Lingua::EO::Orthography::JA|Lingua::EO::Orthography::JA>
 
     my ($converter, $original, $converted);
 
-    # Orthographize ...
+    # orthographize ...
     $converter = Lingua::EO::Orthography->new;
-        # Same as above:
-        # $converter = Lingua::EO::Orthography->new(
-        #     sources => ':all',
-        #     target  => 'orthography',
-        # );
-    $original = q(C^i-momente, la songha h'orajxo )
-              . q(^sprucigas aplauwdon.);           # substitution
-    $converted = $converter->convert($original);    # UTF-8 orthography
-    # The sentence means "In this moment, the dreamy chorus spurts applause."
+    $original  = q(C^i-momente, la songha h'orajxo ^sprucigas aplauwdon.);
+    $converted = $converter->convert($original);
 
-    # Substitute ... (X-system)
-    $converter->sources([qw(orthography)]);         # (accepts plural notations)
+    # substitute ... (X-system)
+    $converter->sources([qw(orthography)]); # (accepts multiple notations)
     $converter->target('postfix_x');
-        # Same as above:
+        # same as above:
         # $converter = Lingua::EO::Orthography->new(
         #     sources => [qw(orthography)],
         #     target  => 'postfix_x',
         # );
-    $original = "\x{108}i-momente, la son\x{11D}a \x{125}ora\x{135}o "
-              . "\x{153}prucigas apla\x{16D}don";   # UTF-8 orthography
-    $converted = $converter->convert($original);    # X-system
+    $original  = q(Ĉi-momente, la sonĝa ĥoraĵo ŝprucigas aplaŭdon);
+    $converted = $converter->convert($original);
 
 =head1 DESCRIPTION
 
-6 letters in Esperanto alphabet did not exist in ASCII.
+6 letters in the Esperanto alphabet did not exist in ASCII.
 Their letters, which have supersigns (eo: supersignoj),
 are often spelled in substitute notations (en: surogataj skribosistemoj)
 for the history, namely, for the ages of typography and typewriter.
 Currently, it is not unusual to spell them in orthography (eo: ortografio)
 by the spread of Unicode (eo: Unikodo).
 However, there is still much environment
-where the input from a keyboard is difficult,
-and people may treat an old document described substitute notation.
+where the input with a keyboard is difficult,
+and people may treat an old document described in substitute notation.
 
-This object oriented module provids you a conversion of their notations.
+This object oriented module provides you a conversion of their notations.
 
 =head2 Caveat
 
-B<This module is in stage of beta release, and the API may be changed.
+B<This module is on stage of beta release, and the API may be changed.
 Your feedback is welcome.>
 
 =head2 Catalogue of notations
 
-The following notation names are usable in an argument of
+The following notation names are usable in
 L<new()|/new>, L<add_sources()|/add_sources>, and so on.
 
 I am going to expand an API in the future,
@@ -444,19 +436,20 @@ and you will can add notations except them.
     (\x{108} \x{109} \x{11C} \x{11D} \x{124} \x{125}
      \x{134} \x{135} \x{15C} \x{15D} \x{16C} \x{16D})
 
-It is the I<orthography>.
+It is the I<orthography> of the Esperanto alphabet.
 The converter treats letters with supersign, which exist in Unicode.
 The character encoding is UTF-8.
 
-You should the orthography today unless there is some particular reason
+You should use the orthography today unless there is some particular reason
 because Unicode was spread sufficiently.
 Perl 5.8.1 or later also treat it correctly.
 
 I recommend that you treat UTF-8 flagged string in your program throughout and
 convert string in only input from external or output to external (on demand),
-for to work functions such as C<length()> correctly
-in the condition which turn L<utf8|utf8> pragma on.
-It is the same as the principle of L<Encode|Encode>.
+for to correctly work functions such as C<length()>
+in the condition which turns L<utf8|utf8> pragma on.
+It is the same as the principle of L<Encode|Encode>
+and L<Perl IO layer|perlio>.
 
 =item C<zamenhof>
 
@@ -472,14 +465,15 @@ For this reason, people also called it I<the second orthography>,
 but it is not used very much today.
 
 It has a problem that string which range between roots (such as 'flug/haven/o')
-looks like substituted string in several words such as 'flughaveno' (airport).
+looks like substituted string in several words such as 'flughaveno'
+(en: 'airport').
 This module does not evade this problem at the present time.
 
 =item C<capital_zamenhof>
 
     CH ch GH gh HH hh JH jh SH sh U  u
 
-It is a variant of L<capital_zamenhof notation|/capital_zamenhof>.
+It is a variant of L<'capital_zamenhof' notation|/capital_zamenhof>.
 
 It places a capital C<H> as a postfix of a capital alphabet.
 
@@ -487,7 +481,7 @@ It places a capital C<H> as a postfix of a capital alphabet.
 
     Ch ch Gh gh Hh hh Jh jh Sh sh Uw uw
 
-It is an extended notation of L<capital_zamenhof notation|/capital_zamenhof>.
+It is an extended notation of L<'capital_zamenhof' notation|/capital_zamenhof>.
 
 It places C<w> as a postfix of C<u>.
 
@@ -497,7 +491,7 @@ People called it I<H-system> (eo: I<H-sistemo>).
 
     CH ch GH gh HH hh JH jh SH sh UW uw
 
-It is a variant of L<postfix_h notation|/postfix_h>.
+It is a variant of L<'postfix_h' notation|/postfix_h>.
 
 It places a capital C<H> or C<W> as a postfix of a capital alphabet.
 
@@ -510,7 +504,7 @@ It is a substitute notation, which places C<x> as a postfix.
 People called it I<X-system> (eo: I<X-sistemo, iksa sistemo>).
 
 People widely use it as a substitute notation,
-because X does not exist in Esperanto alphabet,
+because X does not exist in the Esperanto alphabet,
 and was not used except for the case of
 to describe non-Esperanto word as the original language.
 
@@ -518,7 +512,7 @@ to describe non-Esperanto word as the original language.
 
     CX cx GX gx HX hx JX jx SX sx UX ux
 
-It is a variant of L<postfix_x notation|/postfix_x>.
+It is a variant of L<'postfix_x' notation|/postfix_x>.
 
 It places a capital C<X> as a postfix of a capital alphabet.
 
@@ -540,7 +534,7 @@ which describe C<u~> like C<u^> at the present time.
 
     C' c' G' g' H' h' J' j' S' s' U' u'
 
-It is a substitute notation, which places an apostrophe C<^> as a postfix.
+It is a substitute notation, which places an apostrophe C<'> as a postfix.
 
 =item C<prefix_caret>
 
@@ -565,11 +559,11 @@ I compare them by the following list:
  Can customize notation     Only 'u'        No (under consideration)    *3
  Can treat 'flughaveno'     No              No (under consideration)    *4
  API language               eo: Esperanto   en: English
- Can do N:1 conversion      No              Yes                         *5
+ Can convert N:1            No              Yes                         *5
  Speed                      Satisfied       About 400% faster           *6
  Immediate dependencies     1 (0 in core)   6 (2 in core)               *7
  Whole dependencies         1 (0 in core)   15 (8 in core)              *7
- Test case numbers          3               93                          *8
+ Test case number           3               93                          *8
  License                    Unknown         Perl (Artistic or GNU GPL)
  Last modified on           Mar. 2003       Mar. 2010
 
@@ -632,7 +626,7 @@ I plan to design the API of this function:
 =item 5.
 
 I expect that you may design your practical application
-to accept plural notations, from my experience.
+to accept multiple notations, from my experience.
 
 I included an example in the distribution.
 L<Lingua::EO::Orthography|Lingua::EO::Orthography> can convert string
@@ -643,15 +637,15 @@ In this case, you must convert string while you replace source notation.
 
 =item 6.
 
-L<Lingua::EO::Orthography|Lingua::EO::Orthography> can convert strings
+L<Lingua::EO::Orthography|Lingua::EO::Orthography> can convert string
 about 400% faster than L<Lingua::EO::Supersignoj|Lingua::EO::Supersignoj>.
 
 The reason for the difference is to cache a pattern of regular expression
 and a character converting table to replace string, with L<Memoize|Memoize>.
 Furthermore, L<Lingua::EO::Orthography|Lingua::EO::Orthography> can
-convert characters from plural notations at once.
+convert characters from multiple notations at once.
 
-See F</examples/benchmark.pl> in this distribution.
+See F<examples/benchmark.pl> in this distribution.
 
 =item 7.
 
@@ -660,7 +654,8 @@ The source of dependencies is L<http://deps.cpantesters.org/>.
 Such number excludes modules for building and testing.
 
 Any dependencies of L<Lingua::EO::Orthography|Lingua::EO::Orthography> have
-a certain favorable opinion. I quite agree with those recommendation.
+a certain favorable opinion.
+I quite agree with those recommendation.
 
 But, I consider reducing dependencies.
 I already abandon make this module to depend
@@ -684,7 +679,7 @@ Such number excludes author's tests.
 Returns a L<Lingua::EO::Orthography|Lingua::EO::Orthography> object,
 which is a converter.
 
-Accepts a hash as arguments.
+Accepts a hash as a converting alignment.
 You can assign C<sources> and/or C<target> as key of the hash.
 
 =over 4
@@ -706,7 +701,7 @@ L<postfix_apostrophe|/postfix_apostrophe> and
 L<prefix_caret|/prefix_caret>.
 
 If you omit to assign it, the converter consider that
-you assigned C<:all> to it.
+you assign C<:all> to it.
 
 If you assign a value except C<:all> and an array reference,
 number of notation elements is 0 or
@@ -718,7 +713,7 @@ the converter throws an exception.
 Accepts a string as target L<notation|/Catalogue of notations>.
 
 If you omit to assign it, the converter consider that
-you assigned L<orthography|/orthography> to it.
+you assign L<orthography|/orthography> to it.
 
 If you assign an unknown notation or C<undef>,
 the converter throws an exception.
@@ -731,22 +726,22 @@ the converter throws an exception.
 
     $converted_string = $converter->convert($original_string);
 
-Accepts string as an argument, convert it, and returns converted string.
+Accepts string, convert it, and returns converted string.
 Argument string was not polluted by this method, that is to say,
 argument string was not changed by side-effect of this method.
 A conversion of string is based on notations,
-which assigned at L<new()|/new> constructor and
+which assigned at L<new()|/new> constructor or
 accessors of L<sources()|/sources> and L<target()|/target>.
 
-Strings are case-sensitive.
-That is to say, the converter consider C<cX> to substitute notations
-in L<postfix_x notation|/postfix_x>, and do not convert it.
+String are case-sensitive.
+That is to say, the converter does not consider C<cX> to substitute notations
+in L<'postfix_x' notation|/postfix_x>, and do not convert it.
 
 String of arguments should turn UTF8 flag on.
 String of return value also became on.
 
 An URL or an e-mail address may have string,
-which does not distinguished itself from substitute notation.
+which was consused itself with substitute notation.
 If you do not will convert it, run L<convert()|/convert> each words
 after to C<split()> a sentence into words.
 This let you that the converter except string, which includes C<://> or C<@>,
@@ -859,12 +854,12 @@ To provide an API to add user's notation
 =item *
 
 To correctly treat words such as C<flughaveno> (C<flug/haven/o>)
-in L<postfix_h notation|/postfix_x> with user's lexicon
+in L<'postfix_h' notation|/postfix_x> with user's lexicon
 
 =item *
 
 To correctly treat words such as C<ankaŭ>
-in L<zamenhof notation|/zamenhof> with user's lexicon
+in L<'zamenhof' notation|/zamenhof> with user's lexicon
 
 =item *
 
@@ -879,16 +874,15 @@ No bugs have been reported.
 
 =head2 Making suggestions and reporting bugs
 
-Please report any found bugs, feature requests, and ideas for improvements
-to C<bug-lingua-eo-orthography at rt.cpan.org>,
-or through the web interface
-at L<http://rt.cpan.org/Public/Bug/Report.html?Queue=Lingua-EO-Orthography>.
+Please report any found bugs, feature requests, and ideas for improvements to
+C<< <bug-lingua-eo-orthography at rt dot cpan dot org> >>,
+or through the web interface at
+L<http://rt.cpan.org/Public/Bug/Report.html?Queue=Lingua-EO-Orthography>.
 I will be notified, and then you'll automatically be notified of progress
 on your bugs/requests as I make changes.
 
-When reporting bugs, if possible,
-please add as small a sample as you can make of the code
-that produces the bug.
+When reporting bugs, if possible, please add as small a sample
+as you can make of the code that produces the bug.
 And of course, suggestions and patches are welcome.
 
 =head1 SUPPORT
@@ -912,7 +906,7 @@ You can also look for information at:
 
 =item RT: CPAN's request tracker
 
-L<http://rt.cpan.org/Public/Bug/Report.html?Queue=Lingua-EO-Orthography>
+L<http://rt.cpan.org/Public/Dist/Display.html?Name=Lingua-EO-Orthography>
 
 =item AnnoCPAN: Annotated CPAN documentation
 
@@ -950,19 +944,29 @@ below is the C<Devel::Cover> summary report on this distribution's test suite.
 
 =over 4
 
-=item MORIYA Masaki (a.k.a. Gardejo)
+=item MORIYA Masaki, alias Gardejo
 
 C<< <moriya at cpan dot org> >>,
 L<http://ttt.ermitejo.com/>
 
 =back
 
+=head1 ACKNOWLEDGEMENTS
+
+=over 4
+
+=item *
+
+Juerd Waalboer wrote L<Lingua::EO::Supersignoj|Lingua::EO::Supersignoj>,
+which this module refer to.
+
+=back
+
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (c) 2010 by MORIYA Masaki (a.k.a. Gardejo),
-L<http://ttt.ermitejo.com/>.
+Copyright (c) 2010 MORIYA Masaki, alias Gardejo
 
-This library is free software;
+This module is free software;
 you can redistribute it and/or modify it under the same terms as Perl itself.
 See L<perlgpl|perlgpl> and L<perlartistic|perlartistic>.
 

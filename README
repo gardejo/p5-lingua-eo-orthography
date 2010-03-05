@@ -36,7 +36,7 @@ to read the documentation online with your favorite pager.
 AUTHOR
 ------
 
-MORIYA Masaki (a.k.a. Gardejo)
+MORIYA Masaki, alias Gardejo
 
     <moriya at cpan dot org>,
     http://ttt.ermitejo.com/
@@ -44,8 +44,7 @@ MORIYA Masaki (a.k.a. Gardejo)
 COPYRIGHT AND LICENSE
 ---------------------
 
-Copyright (c) 2010 by MORIYA Masaki (a.k.a. Gardejo),
-http://ttt.ermitejo.com/
+Copyright (c) 2010 MORIYA Masaki, alias Gardejo
 
 This distribution is free software;
 you can redistribute it and/or modify it under the same terms as Perl itself.

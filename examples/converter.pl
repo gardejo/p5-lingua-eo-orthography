@@ -10,7 +10,7 @@ use Lingua::EO::Orthography;
 
 my $converter = Lingua::EO::Orthography->new;
 my $various   = q{C^i-momente, la songha h'orajxo ^sprucigas aplauwdon.};
-#                 --                 --  --   --  --             --
+#                 ==                 ==  ==   ==  ==             ==
 #                  ^                  ^   ^    ^  ^               ^
 #                  |                  |   |    |  |               |
 # post-caret (circumflex)             |   |    |  |               |
@@ -47,11 +47,13 @@ L<Lingua::EO::Orthography|Lingua::EO::Orthography>.
 Please run this script on an UTF-8 available console,
 or redirect STDOUT into a file and open it with an UTF-8 available editor.
 
+Note: Such sentence means "In this moment, the dreamy chorus spurts applause."
+
 =head1 AUTHOR
 
 =over 4
 
-=item MORIYA Masaki (a.k.a. Gardejo)
+=item MORIYA Masaki, alias Gardejo
 
 C<< <moriya at cpan dot org> >>,
 L<http://ttt.ermitejo.com/>
@@ -60,10 +62,9 @@ L<http://ttt.ermitejo.com/>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (c) 2010 by MORIYA Masaki (a.k.a. Gardejo),
-L<http://ttt.ermitejo.com/>.
+Copyright (c) 2010 MORIYA Masaki, alias Gardejo
 
-This library is free software;
+This script is free software;
 you can redistribute it and/or modify it under the same terms as Perl itself.
 See L<perlgpl|perlgpl> and L<perlartistic|perlartistic>.
 
