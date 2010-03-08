@@ -1,5 +1,8 @@
-
 =encoding utf-8
+
+=head1 NAME
+
+Lingua::EO::Orthography::JA - Japanese (JA) translation of Lingua::EO::Orthography / 日本語訳
 
 =head1 名称
 
@@ -567,4 +570,3 @@ The full text of the license can be found in the F<LICENSE> file
 included with this distribution.
 
 =cut
-

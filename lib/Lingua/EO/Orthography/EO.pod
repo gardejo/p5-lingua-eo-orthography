@@ -1,7 +1,8 @@
-
 =encoding utf-8
 
-=pod
+=head1 NAME
+
+Lingua::EO::Orthography::EO - Esperanto (EO) translation of Lingua::EO::Orthography / Esperanto tradukaĵo
 
 =head1 NOMO
 
@@ -654,4 +655,3 @@ The full text of the license can be found in the F<LICENSE> file
 included with this distribution.
 
 =cut
-
