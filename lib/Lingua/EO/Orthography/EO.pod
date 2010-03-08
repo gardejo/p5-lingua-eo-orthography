@@ -45,7 +45,7 @@ L<Lingua::EO::Orthography::JA|Lingua::EO::Orthography::JA>
     # substituas ... (X-sistemo)
     $converter->sources([qw(orthography)]); # (akceptas multajn grafismojn)
     $converter->target('postfix_x');
-        # sama kun super:
+        # estas la sama kiel super:
         # $converter = Lingua::EO::Orthography->new(
         #     sources => [qw(orthography)],
         #     target  => 'postfix_x',
@@ -71,7 +71,7 @@ kiu estas skribita en surogataj skribosistemoj.
 =head2 Averto
 
 B<Ĉi tiu modjulo estas sur ellasaĵo de "beta", kaj la API
-(eo: interfaco por aplikaprogramo, en: Application Programming Interface)
+(eo: interfaco por aplikaprogramado, en: Application Programming Interface)
 eble estas ŝanĝata.
 Via opinio estas bonvena.>
 
@@ -95,11 +95,11 @@ Mi etendos API en la estonteco, kaj vi povos adicii grafismojn alia ol ili.
 La konvertilo manipulas literon kun supersigno, kiu ekzistas en Unikodo.
 La signara enkodigo estas UTF-8.
 
-Vi devas uzi la ortografion hodiaŭ krom se estas ia speciala motivo
+Vi hodiaŭ devas uzi la ortografion krom se estas ia speciala motivo
 ĉar Unikodo sufiĉe disvastiĝas.
 Perl 5.8.1 aŭ pli malfrua ankaŭ manipulas ĝin ĝuste.
 
-Mi rekomendas ke mi manipulas UTF-8 flagata ĉeno en ĉie en la via programo kaj
+Mi rekomendas ke vi manipulas UTF-8 flagata ĉenon en ĉie en la via programo kaj
 konvertas ĉenon nur kiam enigi de ekstero aŭ eligi al ekstero (laŭpete),
 por ĝuste labori funkciojn kiel C<length()>
 en la stato kiu enŝaltas eron de L<utf8|utf8>.
@@ -213,7 +213,7 @@ Mi komparas ilin de sekvanta listo:
  Povas manipuli             Ne              Ne (intere de pesi)         *4
    'flughaveno'
  Lingvo de API              eo: Esperanto   en: la Angla lingvo
- Povas konverti N:1         Ne              Jes                         *5
+ Povas konverti kiel N:1    Ne              Jes                         *5
  Rapideco                   Sata            Pli rapida ĉirkaŭ 400%      *6
  Tujaj dependaĵoj           1 (0 en kerno)  6 (2 en kerno)              *7
  Tutaj dependaĵoj           1 (0 en kerno)  15 (8 en kerno)             *7
@@ -282,7 +282,7 @@ Mi planas fasoni la API de ĉi tiu funkciojn:
 Mi supozas, ke vi povas fasoni vian praktikan aplikaĵon
 kiel ĝi akceptas oblajn grafismojn, de mia travivaĵo.
 
-I inkluzivas ekzemplon en la distribuaĵo.
+Mi inkluzivas ekzemplon en la distribuaĵo.
 L<Lingua::EO::Orthography|Lingua::EO::Orthography> povas konverti ĉenon
 al la ortografio unufoje, kiel F<examples/converter.pl>.
 La ekvivalento en L<Lingua::EO::Supersignoj|Lingua::EO::Supersignoj> estas
@@ -395,12 +395,12 @@ en L<'postfix_x' grafismo|/postfix_x>, kaj ne konvertas ĝin.
 Ĉeno de liversaĵo ankaŭ enŝaltiĝas.
 
 URL aŭ adreso de retpoŝto havas permeson de ĉeno,
-kiu estas konfuzata sin kaj surogata grafismo.
+kiu estas konfuzata sin kaj surogatan grafismon.
 Se vi ne deziras konverti ĝin, rulu L<convert()|/convert> ĉiuvorte,
 poste dividi (per C<split()>) frazon en vortojn.
 Ĉi tio ekskluzivigas al la konvertilo ĉenon, kiu inkluzivas C<://> aŭ C<@>,
 de la celo de la konvertado.
-Vidu RFC 2396 kaj 3986 por URI, kaj RFC 5321 kaj 5322 por adreso de retpoŝto.
+Vidu RFC 2396 kaj 3986 por URI, kaj vidu RFC 5321 kaj 5322 por adreso de retpoŝto.
 Mi priskribis konkretan ekzemplon ĉe
 F<examples/ignore_addresses.pl> en la distribuaĵo.
 
@@ -534,7 +534,7 @@ kaj ideojn por plibonigo al
 C<< <bug-lingua-eo-orthography at rt dot cpan dot org> >>,
 aŭ tra la reta interfaco ĉe
 L<http://rt.cpan.org/Public/Bug/Report.html?Queue=Lingua-EO-Orthography>.
-Mi estos avizata, kaj poste vi estos aŭtomate avizata de plibonstatiĝo
+Mi estos avizata, kaj poste vi estos avizata de plibonstatiĝo aŭtomate
 pri viaj cimoj/petegoj kiel mi fari ŝanĝojn.
 
 Kiam raporti cimojn, se eble, bonvole adiciu specimenon tiel malgranda

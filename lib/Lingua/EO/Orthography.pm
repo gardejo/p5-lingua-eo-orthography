@@ -222,7 +222,7 @@ sub _check_source_notations {
 
 sub _notation {
     return {
-        orthography => [(           # LATIN [CAPITAL|SMALL] LETTER ...
+        orthography => [(           # LATIN (CAPITAL|SMALL) LETTER ...
             "\x{108}", "\x{109}",   #   ... C WITH CIRCUMFLEX
             "\x{11C}", "\x{11D}",   #   ... G WITH CIRCUMFLEX
             "\x{124}", "\x{125}",   #   ... H WITH CIRCUMFLEX
@@ -559,7 +559,7 @@ I compare them by the following list:
  Can customize notation     Only 'u'        No (under consideration)    *3
  Can treat 'flughaveno'     No              No (under consideration)    *4
  API language               eo: Esperanto   en: English
- Can convert N:1            No              Yes                         *5
+ Can convert as N:1         No              Yes                         *5
  Speed                      Satisfied       About 400% faster           *6
  Immediate dependencies     1 (0 in core)   6 (2 in core)               *7
  Whole dependencies         1 (0 in core)   15 (8 in core)              *7
@@ -746,7 +746,7 @@ If you do not will convert it, run L<convert()|/convert> each words
 after to C<split()> a sentence into words.
 This let you that the converter except string, which includes C<://> or C<@>,
 from the target of the conversion.
-See RFC 2396 and 3986 for URI, and RFC 5321 and 5322 for e-mail address.
+See RFC 2396 and 3986 for URI, and see RFC 5321 and 5322 for e-mail address.
 I described a concrete example to
 F<examples/ignore_addresses.pl> in the distribution.
 
