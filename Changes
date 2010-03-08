@@ -5,6 +5,26 @@ This file documents the revision history for Perl distribution
 VERSION HISTORY
 ===============
 
+0.01 : Released on 2010-03-09 (JST)
+-----------------------------------
+
+Bundle `Module::Install::AuthorTests` to the distribution.
+Codes have no changes.
+
+### Bug fixes
+
+#### Packaging
+
+-   Explicitly declare `author_tests` in `Makefile.PL`
+    (for including `Module::Install::AuthorTests`).
+-   Correct resources (repository and homepage).
+
+#### Documentation
+
+-   Correct POD syntax in `Lingua::EO::Orthography::EO` and
+    `Lingua::EO::Orthography::JA` (for properly index POD only files).
+
+
 0.00 : Released on 2010-03-08 (JST)
 -----------------------------------
 
