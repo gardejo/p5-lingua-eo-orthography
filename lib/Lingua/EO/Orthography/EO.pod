@@ -563,7 +563,7 @@ Vi povas ankaŭ rigardi informon ĉe:
 
 =item RT: CPAN's request tracker
 
-L<http://rt.cpan.org/Public/Bug/Report.html?Queue=Lingua-EO-Orthography>
+L<http://rt.cpan.org/Public/Dist/Display.html?Name=Lingua-EO-Orthography>
 
 =item AnnoCPAN: Annotated CPAN documentation
 
