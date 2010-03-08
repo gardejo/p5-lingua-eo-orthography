@@ -1,3 +1,4 @@
+
 =encoding utf-8
 
 =head1 名称
@@ -6,7 +7,7 @@ Lingua::EO::Orthography::JA - エスペラント文字の記法(正字法と代�
 
 =head1 バージョン
 
-この文書はL<Lingua::EO::Orthography|Lingua::EO::Orthography>のバージョンC<0.00>について記述しています。
+この文書はL<Lingua::EO::Orthography|Lingua::EO::Orthography>のバージョンC<0.01>について記述しています。
 
 =head2 翻訳
 
@@ -566,3 +567,4 @@ The full text of the license can be found in the F<LICENSE> file
 included with this distribution.
 
 =cut
+

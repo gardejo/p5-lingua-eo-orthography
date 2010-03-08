@@ -1,3 +1,4 @@
+
 =encoding utf-8
 
 =pod
@@ -10,7 +11,7 @@ Lingua::EO::Orthography::EO - Konvertilo de grafismoj (ortografio kaj surogataj 
 
 Ĉi tiu dokumento priskribas
 L<Lingua::EO::Orthography|Lingua::EO::Orthography>
-de versio C<0.00>.
+de versio C<0.01>.
 
 =head2 Tradukaĵoj
 
@@ -653,3 +654,4 @@ The full text of the license can be found in the F<LICENSE> file
 included with this distribution.
 
 =cut
+
