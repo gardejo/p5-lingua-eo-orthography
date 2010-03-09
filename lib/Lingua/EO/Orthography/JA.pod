@@ -1,10 +1,6 @@
 =encoding utf-8
 
-=head1 NAME
-
-Lingua::EO::Orthography::JA - Japanese (JA) translation of Lingua::EO::Orthography / 日本語訳
-
-=head1 名称
+=head1 NAME / 名称
 
 Lingua::EO::Orthography::JA - エスペラント文字の記法(正字法と代用表記)の変換器
 

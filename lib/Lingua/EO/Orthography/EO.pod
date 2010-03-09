@@ -1,10 +1,6 @@
 =encoding utf-8
 
-=head1 NAME
-
-Lingua::EO::Orthography::EO - Esperanto (EO) translation of Lingua::EO::Orthography / Esperanto tradukaĵo
-
-=head1 NOMO
+=head1 NAME / NOMO
 
 Lingua::EO::Orthography::EO - Konvertilo de grafismoj (ortografio kaj surogataj skribosistemoj) por signoj de Esperanto
 
