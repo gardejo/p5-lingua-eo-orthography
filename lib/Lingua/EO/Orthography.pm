@@ -357,7 +357,7 @@ Lingua::EO::Orthography - A orthography/substitute converter for Esperanto chara
 
 This document describes
 L<Lingua::EO::Orthography|Lingua::EO::Orthography>
-version C<0.00>.
+version C<0.01>.
 
 =head2 Translations
 
@@ -397,7 +397,7 @@ L<Lingua::EO::Orthography::JA|Lingua::EO::Orthography::JA>
         #     sources => [qw(orthography)],
         #     target  => 'postfix_x',
         # );
-    $original  = q(Ĉi-momente, la sonĝa ĥoraĵo ŝprucigas aplaŭdon);
+    $original  = q(ﾄ・-momente, la sonﾄ拌 ﾄ･oraﾄｵo ﾅ挾rucigas aplaﾅｭdon);
     $converted = $converter->convert($original);
 
 =head1 DESCRIPTION
@@ -431,7 +431,7 @@ and you will can add notations except them.
 
 =item C<orthography>
 
-    Ĉ ĉ Ĝ ĝ Ĥ ĥ Ĵ ĵ Ŝ ŝ Ŭ ŭ
+    ﾄ蠀 ﾄ褀 ﾄ鰀 ﾄ鴀 ﾄ､ ﾄ･ ﾄｴ ﾄｵ ﾅ鰀 ﾅ鴀 ﾅｬ ﾅｭ
 
     (\x{108} \x{109} \x{11C} \x{11D} \x{124} \x{125}
      \x{134} \x{135} \x{15C} \x{15D} \x{16C} \x{16D})
@@ -522,7 +522,7 @@ It places a capital C<X> as a postfix of a capital alphabet.
 
 It is a substitute notation, which places a caret C<^> as a postfix.
 
-People called it I<caret system> (eo: I<ĉapelita sistemo>).
+People called it I<caret system> (eo: I<ﾄ餌pelita sistemo>).
 
 People often use it as a substitute notation,
 because caret have the same shape as circumflex.
@@ -858,7 +858,7 @@ in L<'postfix_h' notation|/postfix_x> with user's lexicon
 
 =item *
 
-To correctly treat words such as C<ankaŭ>
+To correctly treat words such as C<ankaﾅｭ>
 in L<'zamenhof' notation|/zamenhof> with user's lexicon
 
 =item *
