@@ -2,7 +2,7 @@
 
 =head1 NAME / 名称
 
-Lingua::EO::Orthography::JA - エスペラント文字の記法(正字法と代用表記)の変換器
+Lingua::EO::Orthography::JA - エスペラント文字の正字法と代用表記の変換器
 
 =head1 バージョン
 

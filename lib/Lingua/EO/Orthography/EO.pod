@@ -2,7 +2,7 @@
 
 =head1 NAME / NOMO
 
-Lingua::EO::Orthography::EO - Konvertilo de grafismoj (ortografio kaj surogataj skribosistemoj) por signoj de Esperanto
+Lingua::EO::Orthography::EO - Konvertilo de ortografio/substituaĵo por Esperantaj signoj
 
 =head1 VERSIO
 

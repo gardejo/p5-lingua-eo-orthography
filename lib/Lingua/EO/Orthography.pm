@@ -351,7 +351,7 @@ __END__
 
 =head1 NAME
 
-Lingua::EO::Orthography - A converter of notations (orthography and substitute notations) for Esperanto characters
+Lingua::EO::Orthography - A orthography/substitute converter for Esperanto characters
 
 =head1 VERSION
 
