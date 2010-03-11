@@ -372,36 +372,6 @@ la konvertilo ĵetas escepton.
 
 =back
 
-=head2 Konvertilo
-
-=head3 C<< convert >>
-
-    $converted_string = $converter->convert($original_string);
-
-Akceptas ĉenon, konvertas ĝin, kaj liveras ĉenon.
-Argumenta ĉeno ne estas poluata de ĉi tiu metodo, tio estas,
-argumenta ĉeno ne estas ŝanĝata de kromefiko de ĉi tiu metodo.
-Konvertado de ĉeno estas bazita sur grafismoj,
-kiuj estas atribuita ĉe konstruilo L<new()|/new> aŭ
-aliriloj de L<sources()|/sources> kaj L<target()|/target>.
-
-Ĉeno estas usklecodistinga (en: case-sensitive).
-Tio estas, la konvertilo ne konsideras C<cX> kiel surogataj grafismoj
-en L<'postfix_x' grafismo|/postfix_x>, kaj ne konvertas ĝin.
-
-Ĉeno de argumento devas enŝalti flagon de UTF8.
-Ĉeno de liversaĵo ankaŭ enŝaltiĝas.
-
-URL aŭ adreso de retpoŝto havas permeson de ĉeno,
-kiu estas konfuzata sin kaj surogatan grafismon.
-Se vi ne deziras konverti ĝin, rulu L<convert()|/convert> ĉiuvorte,
-poste dividi (per C<split()>) frazon en vortojn.
-Ĉi tio ekskluzivigas al la konvertilo ĉenon, kiu inkluzivas C<://> aŭ C<@>,
-de la celo de la konvertado.
-Vidu RFC 2396 kaj 3986 por URI, kaj vidu RFC 5321 kaj 5322 por adreso de retpoŝto.
-Mi priskribis konkretan ekzemplon ĉe
-F<examples/ignore_addresses.pl> en la distribuaĵo.
-
 =head2 Aliriloj
 
 =head3 C<< sources >>
@@ -431,6 +401,37 @@ Akceptas ĉenon kiel cela grafismo.
 Vi povas uzi grafismojn kiel konstruilo L<new()|/new>.
 
 Liveraĵo estas la sama kiel kiam argumento ne estas liverata.
+
+=head2 Konvertilo
+
+=head3 C<< convert >>
+
+    $converted_string = $converter->convert($original_string);
+
+Akceptas ĉenon, konvertas ĝin, kaj liveras ĉenon.
+Argumenta ĉeno ne estas poluata de ĉi tiu metodo, tio estas,
+argumenta ĉeno ne estas ŝanĝata de kromefiko de ĉi tiu metodo.
+Konvertado de ĉeno estas bazita sur grafismoj,
+kiuj estas atribuita ĉe konstruilo L<new()|/new> aŭ
+aliriloj de L<sources()|/sources> kaj L<target()|/target>.
+
+Ĉeno estas usklecodistinga (en: case-sensitive).
+Tio estas, la konvertilo ne konsideras C<cX> kiel surogataj grafismoj
+en L<'postfix_x' grafismo|/postfix_x>, kaj ne konvertas ĝin.
+
+Ĉeno de argumento devas enŝalti flagon de UTF8.
+Ĉeno de liversaĵo ankaŭ enŝaltiĝas.
+
+URL aŭ adreso de retpoŝto havas permeson de ĉeno,
+kiu estas konfuzata sin kaj surogatan grafismon.
+Se vi ne deziras konverti ĝin, rulu L<convert()|/convert> ĉiuvorte,
+poste dividi (per C<split()>) frazon en vortojn.
+Ĉi tio ekskluzivigas al la konvertilo ĉenon, kiu inkluzivas C<://> aŭ C<@>,
+de la celo de la konvertado.
+Vidu RFC 2396 kaj 3986 por URI,
+kaj vidu RFC 5321 kaj 5322 por adreso de retpoŝto.
+Mi priskribis konkretan ekzemplon ĉe
+F<examples/ignore_addresses.pl> en la distribuaĵo.
 
 =head2 Utilecaj methodoj
 
@@ -488,38 +489,6 @@ L<http://freshmeat.net/projects/eoconv/>
 =head1 MALKONGRUECO
 
 Estas ne raportata.
-
-=head1 FARENDAĴOJ
-
-=over 4
-
-=item *
-
-Pluaj testoj
-
-=item *
-
-Malpluaj dependaĵoj
-
-=item *
-
-Provizi API por adicii grafismon de uzanto
-
-=item *
-
-Ĝuste manipuli vortojn kiel C<flughaveno> (C<flug/haven/o>)
-en L<'postfix_h' grafismo|/postfix_x> kun leksikono de uzanto
-
-=item *
-
-Ĝuste manipuli vortojn kiel C<ankaŭ>
-en L<'zamenhof' grafismo|/zamenhof> kun leksikono de uzanto
-
-=item *
-
-Eldoni L<Moose|Moose>-eblan klason kiel C<Lingua::EO::Orthography::Moosified>
-
-=back
 
 =head1 CIMOJ KAJ LIMIGADOJ
 
@@ -594,6 +563,38 @@ pri kompleto de testoj de ĉi tiu distribuaĵo.
  .../Lingua/EO/Orthography.pm  100.0  100.0  100.0  100.0  100.0  100.0  100.0
  Total                         100.0  100.0  100.0  100.0  100.0  100.0  100.0
  ---------------------------- ------ ------ ------ ------ ------ ------ ------
+
+=head1 FARENDAĴOJ
+
+=over 4
+
+=item *
+
+Pluaj testoj
+
+=item *
+
+Malpluaj dependaĵoj
+
+=item *
+
+Provizi API por adicii grafismon de uzanto
+
+=item *
+
+Ĝuste manipuli vortojn kiel C<flughaveno> (C<flug/haven/o>)
+en L<'postfix_h' grafismo|/postfix_x> kun leksikono de uzanto
+
+=item *
+
+Ĝuste manipuli vortojn kiel C<ankaŭ>
+en L<'zamenhof' grafismo|/zamenhof> kun leksikono de uzanto
+
+=item *
+
+Eldoni L<Moose|Moose>-eblan klason kiel C<Lingua::EO::Orthography::Moosified>
+
+=back
 
 =head1 AŬTORO
 

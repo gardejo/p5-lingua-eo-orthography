@@ -308,27 +308,6 @@ C<:all>または配列リファレンス以外の値を指定した場合や、�
 
 =back
 
-=head2 コンバーター
-
-=head3 C<< convert >>
-
-    $converted_string = $converter->convert($original_string);
-
-与えた文字列を変換し、変換後の文字列を返します。
-引数は汚しません(つまり、副作用として引数の文字列が変更されることはありません)。
-文字列の変換はコンストラクターL<new()|/new>やアクセッサーL<sources()|/sources>, L<target()|/target>で指定した記法に基づいて実行されます。
-
-文字列の大文字・小文字は区別されます。
-つまり、L<'postfix_x'記法|/postfix_x>であってもC<cX>は代用表記と見なさず、変換しません。
-
-引数の文字列はUTF8フラグがオンになっている必要があります。
-戻り値の文字列もUTF8フラグがオンになります。
-
-URLやメールアドレスなどには、代用表記と見分けの付かない文字列が含まれることがあります。
-それらが変換されないようにしたい場合には、文を一旦単語列にC<split()>した上で、それぞれの単語についてL<convert()|/convert>を実行してください。
-これにより、C<://>やC<@>という文字列を含む単語を変換対象から外すことが出来ます。URIはRFC 2396, 3986を、メールアドレスはRFC 5321, 5322を、それぞれ参照してください。
-また、このディストリビューションに同梱されているF<examples/ignore_addresses.pl>に具体例を記述しています。
-
 =head2 アクセッサー
 
 =head3 C<< sources >>
@@ -357,6 +336,27 @@ URLやメールアドレスなどには、代用表記と見分けの付かな�
 使用出来る記法はコンストラクターL<new()|/new>と同じです。
 
 戻り値は引数を与えない場合と同じです。
+
+=head2 コンバーター
+
+=head3 C<< convert >>
+
+    $converted_string = $converter->convert($original_string);
+
+与えた文字列を変換し、変換後の文字列を返します。
+引数は汚しません(つまり、副作用として引数の文字列が変更されることはありません)。
+文字列の変換はコンストラクターL<new()|/new>やアクセッサーL<sources()|/sources>, L<target()|/target>で指定した記法に基づいて実行されます。
+
+文字列の大文字・小文字は区別されます。
+つまり、L<'postfix_x'記法|/postfix_x>であってもC<cX>は代用表記と見なさず、変換しません。
+
+引数の文字列はUTF8フラグがオンになっている必要があります。
+戻り値の文字列もUTF8フラグがオンになります。
+
+URLやメールアドレスなどには、代用表記と見分けの付かない文字列が含まれることがあります。
+それらが変換されないようにしたい場合には、文を一旦単語列にC<split()>した上で、それぞれの単語についてL<convert()|/convert>を実行してください。
+これにより、C<://>やC<@>という文字列を含む単語を変換対象から外すことが出来ます。URIはRFC 2396, 3986を、メールアドレスはRFC 5321, 5322を、それぞれ参照してください。
+また、このディストリビューションに同梱されているF<examples/ignore_addresses.pl>に具体例を記述しています。
 
 =head2 ユーティリティー
 
@@ -396,6 +396,8 @@ URLやメールアドレスなどには、代用表記と見分けの付かな�
 
 L. L. Zamenhof, I<Fundamento de Esperanto>, 1905
 
+(L. L. ザメンホフ, I<エスペラントの基礎>, 1905)
+
 =item *
 
 L<http://en.wikipedia.org/wiki/Esperanto_orthography>
@@ -407,36 +409,6 @@ L<Lingua::EO::Supersignoj|Lingua::EO::Supersignoj>
 =item *
 
 L<http://freshmeat.net/projects/eoconv/>
-
-=back
-
-=head1 今後の予定
-
-=over 4
-
-=item *
-
-テストの拡充
-
-=item *
-
-依存モジュールの削減
-
-=item *
-
-ユーザー記法を追加するAPIの提供
-
-=item *
-
-ユーザー辞書によってC<flug/haven/o>などの単語をL<'postfix_h'記法|/postfix_h>で正確に取り扱うこと
-
-=item *
-
-ユーザー辞書によってC<ankaŭ>などの単語をL<'zamenhof'記法|/zamenhof>で正確に取り扱うこと
-
-=item *
-
-L<Moose|Moose>やL<Mouse|Mouse>に親和するクラスのリリース(C<Lingua::EO::Orthography::Moosified>など)
 
 =back
 
@@ -511,6 +483,36 @@ L<http://cpanratings.perl.org/dist/Lingua-EO-Orthography>
  .../Lingua/EO/Orthography.pm  100.0  100.0  100.0  100.0  100.0  100.0  100.0
  Total                         100.0  100.0  100.0  100.0  100.0  100.0  100.0
  ---------------------------- ------ ------ ------ ------ ------ ------ ------
+
+=head1 今後の予定
+
+=over 4
+
+=item *
+
+テストの拡充
+
+=item *
+
+依存モジュールの削減
+
+=item *
+
+ユーザー記法を追加するAPIの提供
+
+=item *
+
+ユーザー辞書によってC<flug/haven/o>などの単語をL<'postfix_h'記法|/postfix_h>で正確に取り扱うこと
+
+=item *
+
+ユーザー辞書によってC<ankaŭ>などの単語をL<'zamenhof'記法|/zamenhof>で正確に取り扱うこと
+
+=item *
+
+L<Moose|Moose>やL<Mouse|Mouse>に親和するクラスのリリース(C<Lingua::EO::Orthography::Moosified>など)
+
+=back
 
 =head1 著者
 

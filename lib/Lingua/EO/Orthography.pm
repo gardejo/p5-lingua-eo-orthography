@@ -720,6 +720,35 @@ the converter throws an exception.
 
 =back
 
+=head2 Accessors
+
+=head3 C<< sources >>
+
+    $source_notations_ref = $converter->sources;
+
+Returns source notations as an array reference.
+If you want to get it as a list, you can use L<all_sources()|/all_sources>.
+
+    $source_notations_ref = $converter->sources(\@notations);
+
+Accepts an array reference as source notations.
+You can use notations as L<new()|/new> constructor.
+
+Return value is the same as when an argument was not passed.
+
+=head3 C<< target >>
+
+    $target_notation = $converter->target;
+
+Returns target notation as a scalar.
+
+    $target_notation = $converter->target($notation);
+
+Accepts a string as target notation.
+You can use notations as L<new()|/new> constructor.
+
+Return value is the same as when an argument was not passed.
+
 =head2 Converter
 
 =head3 C<< convert >>
@@ -749,35 +778,6 @@ from the target of the conversion.
 See RFC 2396 and 3986 for URI, and see RFC 5321 and 5322 for e-mail address.
 I described a concrete example to
 F<examples/ignore_addresses.pl> in the distribution.
-
-=head2 Accessors
-
-=head3 C<< sources >>
-
-    $source_notations_ref = $converter->sources;
-
-Returns source notations as an array reference.
-If you want to get it as a list, you can use L<all_sources()|/all_sources>.
-
-    $source_notations_ref = $converter->sources(\@notations);
-
-Accepts an array reference as source notations.
-You can use notations as L<new()|/new> constructor.
-
-Return value is the same as when an argument was not passed.
-
-=head3 C<< target >>
-
-    $target_notation = $converter->target;
-
-Returns target notation as a scalar.
-
-    $target_notation = $converter->target($notation);
-
-Accepts a string as target notation.
-You can use notations as L<new()|/new> constructor.
-
-Return value is the same as when an argument was not passed.
 
 =head2 Utilities
 
@@ -834,39 +834,6 @@ L<http://freshmeat.net/projects/eoconv/>
 =head1 INCOMPATIBILITIES
 
 None reported.
-
-=head1 TO DO
-
-=over 4
-
-=item *
-
-More tests
-
-=item *
-
-Less dependencies
-
-=item *
-
-To provide an API to add user's notation
-
-=item *
-
-To correctly treat words such as C<flughaveno> (C<flug/haven/o>)
-in L<'postfix_h' notation|/postfix_x> with user's lexicon
-
-=item *
-
-To correctly treat words such as C<ankaﾅｭ>
-in L<'zamenhof' notation|/zamenhof> with user's lexicon
-
-=item *
-
-To release a L<Moose|Moose> friendly class
-such as C<Lingua::EO::Orthography::Moosified>
-
-=back
 
 =head1 BUGS AND LIMITATIONS
 
@@ -939,6 +906,39 @@ below is the C<Devel::Cover> summary report on this distribution's test suite.
  .../Lingua/EO/Orthography.pm  100.0  100.0  100.0  100.0  100.0  100.0  100.0
  Total                         100.0  100.0  100.0  100.0  100.0  100.0  100.0
  ---------------------------- ------ ------ ------ ------ ------ ------ ------
+
+=head1 TO DO
+
+=over 4
+
+=item *
+
+More tests
+
+=item *
+
+Less dependencies
+
+=item *
+
+To provide an API to add user's notation
+
+=item *
+
+To correctly treat words such as C<flughaveno> (C<flug/haven/o>)
+in L<'postfix_h' notation|/postfix_x> with user's lexicon
+
+=item *
+
+To correctly treat words such as C<ankaﾅｭ>
+in L<'zamenhof' notation|/zamenhof> with user's lexicon
+
+=item *
+
+To release a L<Moose|Moose> friendly class
+such as C<Lingua::EO::Orthography::Moosified>
+
+=back
 
 =head1 AUTHOR
 
