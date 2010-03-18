@@ -33,7 +33,7 @@ use Try::Tiny;
 # version
 # ****************************************************************
 
-our $VERSION = "0.01";
+our $VERSION = "0.02";
 
 
 # ****************************************************************
@@ -357,7 +357,7 @@ Lingua::EO::Orthography - A orthography/substitute converter for Esperanto chara
 
 This document describes
 L<Lingua::EO::Orthography|Lingua::EO::Orthography>
-version C<0.01>.
+version C<0.02>.
 
 =head2 Translations
 
@@ -554,7 +554,7 @@ I compare them by the following list:
 
  Viewpoints                 ::Supersignoj   ::Orthography               Note
  -------------------------- --------------- --------------------------- ----
- Version                    0.02            0.00
+ Version                    0.02            0.02
  Can convert @lines         Yes             No                          *1
  Have accessors             Yes             Yes, and it has utilities   *2
  Can customize notation     Only 'u'        No (under consideration)    *3

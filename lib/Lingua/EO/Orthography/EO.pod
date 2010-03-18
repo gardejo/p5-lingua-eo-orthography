@@ -8,7 +8,7 @@ Lingua::EO::Orthography::EO - Konvertilo de ortografio/substituaĵo por Esperant
 
 Ĉi tiu dokumento priskribas
 L<Lingua::EO::Orthography|Lingua::EO::Orthography>
-de versio C<0.01>.
+de versio C<0.02>.
 
 =head2 Tradukaĵoj
 
@@ -204,7 +204,7 @@ Mi komparas ilin de sekvanta listo:
 
  Vidpunktoj                 ::Supersignoj   ::Orthography               Noto
  -------------------------- --------------- --------------------------- ----
- Versio                     0.02            0.00
+ Versio                     0.02            0.02
  Povas konverti @lines      Jes             Ne                          *1
  Havas alirilojn            Jes             Jes, kaj ĝi havas
                                               utilecajn metodojn        *2

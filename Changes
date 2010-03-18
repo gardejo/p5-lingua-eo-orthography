@@ -5,6 +5,28 @@ This file documents the revision history for Perl distribution
 VERSION HISTORY
 ===============
 
+0.02 : Released on 2010-03-19 (JST)
+-----------------------------------
+
+Codes have no changes.
+
+### Bug fixes
+
+#### Packaging
+
+-   Resolve RT #55482: Undeclared dependencies on test related modules.
+    Thanks to Andreas Koenig.
+-   Explicitly declare `author_tests` in `Makefile.PL`
+    (for including `Module::Install::AuthorTests`).
+-   Correct resources (repository and homepage).
+-   Disable `auto_install`.
+
+#### Documentation
+
+-   Correct POD syntax in `Lingua::EO::Orthography::EO` and
+    `Lingua::EO::Orthography::JA` (for properly index POD only files).
+
+
 0.01 : Released on 2010-03-09 (JST)
 -----------------------------------
 
