@@ -603,7 +603,7 @@ Eldoni L<Moose|Moose>-eblan klason kiel C<Lingua::EO::Orthography::Moosified>
 =item MORIJA Masaki, alinome Gardejo (en: MORIYA Masaki, alias Gardejo)
 
 C<< <moriya at cpan dot org> >>,
-L<http://ttt.ermitejo.com/>
+L<http://gardejo.org/>
 
 =back
 
@@ -614,7 +614,7 @@ L<http://ttt.ermitejo.com/>
 =item MORIJA Masaki, alinome Gardejo (en: MORIYA Masaki, alias Gardejo)
 
 C<< <moriya at cpan dot org> >>,
-L<http://ttt.ermitejo.com/>
+L<http://gardejo.org/>
 
 =back
 

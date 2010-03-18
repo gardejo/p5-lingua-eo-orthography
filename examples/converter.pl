@@ -56,7 +56,7 @@ Note: Such sentence means "In this moment, the dreamy chorus spurts applause."
 =item MORIYA Masaki, alias Gardejo
 
 C<< <moriya at cpan dot org> >>,
-L<http://ttt.ermitejo.com/>
+L<http://gardejo.org/>
 
 =back
 

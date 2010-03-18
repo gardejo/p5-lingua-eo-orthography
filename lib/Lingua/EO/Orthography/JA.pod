@@ -521,7 +521,7 @@ L<Moose|Moose>やL<Mouse|Mouse>に親和するクラスのリリース(C<Lingua:
 =item 守屋 雅樹 (Gardejo) (en: MORIYA Masaki, alias Gardejo)
 
 C<< <moriya at cpan dot org> >>,
-L<http://ttt.ermitejo.com/>
+L<http://gardejo.org/>
 
 =back
 
@@ -532,7 +532,7 @@ L<http://ttt.ermitejo.com/>
 =item 守屋 雅樹 (Gardejo) (en: MORIYA Masaki, alias Gardejo)
 
 C<< <moriya at cpan dot org> >>,
-L<http://ttt.ermitejo.com/>
+L<http://gardejo.org/>
 
 =back
 

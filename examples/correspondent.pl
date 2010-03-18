@@ -70,7 +70,7 @@ or redirect STDOUT into a file and open it with an UTF-8 available editor.
 =item MORIYA Masaki, alias Gardejo
 
 C<< <moriya at cpan dot org> >>,
-L<http://ttt.ermitejo.com/>
+L<http://gardejo.org/>
 
 =back
 
