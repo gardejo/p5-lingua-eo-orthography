@@ -22,7 +22,8 @@ L<Lingua::EO::Orthography::EO|Lingua::EO::Orthography::EO>
 
 =item ja: 日本語
 
-L<Lingua::EO::Orthography::JA|Lingua::EO::Orthography::JA> (この文書)
+L<Lingua::EO::Orthography::JA|Lingua::EO::Orthography::JA>
+(この文書)
 
 =back
 

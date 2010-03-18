@@ -20,7 +20,8 @@ L<Lingua::EO::Orthography|Lingua::EO::Orthography>
 
 =item eo: Esperanto
 
-L<Lingua::EO::Orthography::EO|Lingua::EO::Orthography::EO> (Ĉi tiu dokumento)
+L<Lingua::EO::Orthography::EO|Lingua::EO::Orthography::EO>
+(Ĉi tiu dokumento)
 
 =item ja: La Japana lingvo
 

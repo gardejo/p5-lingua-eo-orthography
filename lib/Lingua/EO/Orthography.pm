@@ -365,7 +365,8 @@ version C<0.01>.
 
 =item en: English
 
-L<Lingua::EO::Orthography|Lingua::EO::Orthography> (This document)
+L<Lingua::EO::Orthography|Lingua::EO::Orthography>
+(This document)
 
 =item eo: Esperanto
 
