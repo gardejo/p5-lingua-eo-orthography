@@ -33,7 +33,7 @@ use Try::Tiny;
 # version
 # ****************************************************************
 
-our $VERSION = "0.02";
+our $VERSION = "0.03";
 
 
 # ****************************************************************
@@ -357,7 +357,7 @@ Lingua::EO::Orthography - A orthography/substitute converter for Esperanto chara
 
 This document describes
 L<Lingua::EO::Orthography|Lingua::EO::Orthography>
-version C<0.02>.
+version C<0.03>.
 
 =head2 Translations
 
@@ -398,7 +398,7 @@ L<Lingua::EO::Orthography::JA|Lingua::EO::Orthography::JA>
         #     sources => [qw(orthography)],
         #     target  => 'postfix_x',
         # );
-    $original  = q(ﾄ・-momente, la sonﾄ拌 ﾄ･oraﾄｵo ﾅ挾rucigas aplaﾅｭdon);
+    $original  = q(Ĉi-momente, la sonĝa ĥoraĵo ŝprucigas aplaŭdon);
     $converted = $converter->convert($original);
 
 =head1 DESCRIPTION
@@ -432,7 +432,7 @@ and you will can add notations except them.
 
 =item C<orthography>
 
-    ﾄ蠀 ﾄ褀 ﾄ鰀 ﾄ鴀 ﾄ､ ﾄ･ ﾄｴ ﾄｵ ﾅ鰀 ﾅ鴀 ﾅｬ ﾅｭ
+    Ĉ ĉ Ĝ ĝ Ĥ ĥ Ĵ ĵ Ŝ ŝ Ŭ ŭ
 
     (\x{108} \x{109} \x{11C} \x{11D} \x{124} \x{125}
      \x{134} \x{135} \x{15C} \x{15D} \x{16C} \x{16D})
@@ -523,7 +523,7 @@ It places a capital C<X> as a postfix of a capital alphabet.
 
 It is a substitute notation, which places a caret C<^> as a postfix.
 
-People called it I<caret system> (eo: I<ﾄ餌pelita sistemo>).
+People called it I<caret system> (eo: I<ĉapelita sistemo>).
 
 People often use it as a substitute notation,
 because caret have the same shape as circumflex.
@@ -554,7 +554,7 @@ I compare them by the following list:
 
  Viewpoints                 ::Supersignoj   ::Orthography               Note
  -------------------------- --------------- --------------------------- ----
- Version                    0.02            0.02
+ Version                    0.02            0.03
  Can convert @lines         Yes             No                          *1
  Have accessors             Yes             Yes, and it has utilities   *2
  Can customize notation     Only 'u'        No (under consideration)    *3
@@ -931,7 +931,7 @@ in L<'postfix_h' notation|/postfix_x> with user's lexicon
 
 =item *
 
-To correctly treat words such as C<ankaﾅｭ>
+To correctly treat words such as C<ankaŭ>
 in L<'zamenhof' notation|/zamenhof> with user's lexicon
 
 =item *
