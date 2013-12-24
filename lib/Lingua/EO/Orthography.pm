@@ -405,7 +405,7 @@ L<Lingua::EO::Orthography::JA|Lingua::EO::Orthography::JA>
 
 6 letters in the Esperanto alphabet did not exist in ASCII.
 Their letters, which have supersigns (eo: supersignoj),
-are often spelled in substitute notations (en: surogataj skribosistemoj)
+are often spelled in substitute notations (eo: surogataj skribosistemoj)
 for the history, namely, for the ages of typography and typewriter.
 Currently, it is not unusual to spell them in orthography (eo: ortografio)
 by the spread of Unicode (eo: Unikodo).
