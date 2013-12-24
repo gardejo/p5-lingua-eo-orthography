@@ -6,7 +6,7 @@ Lingua::EO::Orthography::JA - エスペラント文字の正字法と代用表�
 
 =head1 バージョン
 
-この文書はL<Lingua::EO::Orthography|Lingua::EO::Orthography>のバージョンC<0.03>について記述しています。
+この文書はL<Lingua::EO::Orthography|Lingua::EO::Orthography>のバージョンC<0.04>について記述しています。
 
 =head2 翻訳
 
@@ -171,7 +171,7 @@ I<キャレット方式>(I<caret system>, I<ĉapelita sistemo>)と呼ばれて�
 
  観点                       ::Supersignoj   ::Orthography               備考
  -------------------------- --------------- --------------------------- ----
- バージョン                 0.02            0.03
+ バージョン                 0.02            0.04
  @linesを変換出来る         はい            いいえ                      *1
  アクセッサーがある         はい            はい(有用なメソッド付き)    *2
  記法をカスタマイズ出来る   'u'のみ可能     いいえ(検討中)              *3
